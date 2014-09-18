@@ -31,9 +31,25 @@ gem 'simple_form'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
 
+group :development do
+	gem "better_errors"
+	gem "binding_of_caller"
+	gem 'quiet_assets'
+	gem 'pry-rails'
+end
+
 group :test, :development do
 	gem 'rspec-rails'
 	gem 'factory_girl_rails'
+	gem "growl"
+	gem 'guard'
+	# gem 'guard-zeus'
+	gem 'guard-rspec', require: false
+	gem 'guard-livereload', require: false
+  gem "guard-bundler"
+  gem "rb-inotify", require: false
+  gem "rb-fsevent", require: false
+  gem "rb-fchange", require: false
 end
 
 group :test do

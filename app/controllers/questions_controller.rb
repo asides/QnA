@@ -27,6 +27,7 @@ class QuestionsController < ApplicationController
 
 	def update
 		if @question.update(question_params)
+			flash[:notice] = "You Question now updated!"
 			redirect_to @question
 		else
 			render :edit
@@ -35,7 +36,8 @@ class QuestionsController < ApplicationController
 
 	def destroy
 		@question.destroy
-		redirect_to question_path
+		flash[:notice] = "Question with id:#{@question.id} deleted!"
+		redirect_to questions_path
 	end
 
 	private

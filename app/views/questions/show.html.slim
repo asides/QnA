@@ -1,0 +1,5 @@
+h1 =@question.title
+p = @question.body
+hr
+a.btn.btn-primary href=edit_question_path(@question) Изменить вопрос
+= link_to "Удалить вопрос", question_path(@question), method: :delete, data: { confirm: 'Действительно удалить?' }, class: 'btn btn-danger'
