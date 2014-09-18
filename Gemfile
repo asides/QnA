@@ -27,6 +27,10 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
 gem 'slim-rails'
+gem 'simple_form'
+gem 'bootstrap-sass', '~> 3.2.0'
+gem 'autoprefixer-rails'
+
 group :test, :development do
 	gem 'rspec-rails'
 	gem 'factory_girl_rails'
