@@ -23,17 +23,15 @@ RSpec.describe AnswersController, :type => :controller do
 	end
 
   describe "POST #create" do
-    # let(:post_create) do
-    #   { post :create, question_id: question, answer: attributes }
-    # end
+    let(:post_create) { post :create, question_id: question, answer: attributes }
 
     context 'with valid attributes' do
       it "save new answer to DB" do
-        expect{ post :create, question_id: question, answer: attributes }.to change(Answer, :count).by(1)
+        expect{ post_create }.to change(Answer, :count).by(1)
       end
 
       it "redirect to question" do
-        post :create, question_id: question, answer: attributes
+        post_create
         expect(response).to redirect_to question
       end
     end
@@ -42,11 +40,11 @@ RSpec.describe AnswersController, :type => :controller do
       let(:attributes) { attributes_for(:answer, body: nil) }
 
       it "does not save answer with invalid attributes" do
-        expect{ post :create, question_id: question, answer: attributes }.to_not change(Answer, :count)
+        expect{ post_create }.to_not change(Answer, :count)
       end
 
       it "re-render new view" do
-        post :create, question_id: question, answer: attributes
+        post_create
         expect(response).to render_template :new
       end
     end
@@ -61,6 +59,36 @@ RSpec.describe AnswersController, :type => :controller do
 
     it "render edit view" do
       expect(response).to render_template :edit
+    end
+  end
+
+  describe "PATCH #update" do
+    before {patch :update, id: answer, answer: attributes}
+
+    context 'with valid attributes' do
+      let(:attributes) { { body: '123' } }
+
+      it "update answer record" do
+        answer.reload
+        expect(answer.body).to eq '123'
+      end
+
+      it "redirects to the associated question" do
+        patch :update, id: answer, answer: { body: '123' }
+        expect(response).to redirect_to answer.question
+      end
+    end
+
+    context 'with invalid attributes' do
+      let(:attributes) { { body: nil } }
+
+      it "does not save record" do
+        expect(answer.body).to eq 'MyText'
+      end
+
+      it "re-renders edit view" do
+        expect(response).to render_template :edit
+      end
     end
   end
 
