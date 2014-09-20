@@ -1,5 +1,11 @@
 h1 =@question.title
 p = @question.body
 hr
+- if @question.answers
+  - @question.answers.each do |answer|
+    .well.well-small
+      = answer.body
+hr
+= link_to "Ответить на вопрос", new_question_answer_path(@question)
 a.btn.btn-primary href=edit_question_path(@question) Изменить вопрос
 = link_to "Удалить вопрос", question_path(@question), method: :delete, data: { confirm: 'Действительно удалить?' }, class: 'btn btn-danger'
