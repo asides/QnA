@@ -27,6 +27,12 @@ class AnswersController < ApplicationController
     end
   end
 
+  def destroy
+    @answer.destroy
+    flash[:notice] = "Answer with id:#{@answer.id} destroy!"
+    redirect_to @answer.question
+  end
+
   private
 
   def set_question
