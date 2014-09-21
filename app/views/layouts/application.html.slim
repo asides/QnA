@@ -7,18 +7,20 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   body
-  	nav.navbar.navbar-default role="navigation"
-		  .container-fluid
-	  		.navbar-header
-	    		a.navbar-brand href=root_path  Вопросы и ответы. Учебный проект.
-		   	ul.nav.navbar-nav
-		      li.active
-		        a href=questions_path  Список вопросов
-	- if flash[:notice]
+    nav.navbar.navbar-default role="navigation"
       .container-fluid
-	      .alert.alert-warning.fade.in.col-md-3 role="alert"
-		      button type="button" class="close" data-dismiss="alert"
-		      	span aria-hidden="true" ×
-		      	span class="sr-only" Close
-		      = flash[:notice]
+        .navbar-header
+          a.navbar-brand href=root_path  Вопросы и ответы. Учебный проект.
+          ul.nav.navbar-nav
+          li.active
+            a href=questions_path  Список вопросов
+    / - if flash[:notice]
+    /     .container-fluid
+    /       .alert.alert-warning.fade.in.col-md-3 role="alert"
+    /         button type="button" class="close" data-dismiss="alert"
+    /           span aria-hidden="true" ×
+    /           span class="sr-only" Close
+    /         = flash[:notice]
+    p.notice = notice
+    p.alert = alert
     = yield
