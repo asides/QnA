@@ -34,20 +34,20 @@ gem 'devise'
 gem 'devise-i18n', github: 'tigrish/devise-i18n', branch: 'master'
 
 group :development do
-	gem "better_errors"
-	gem "binding_of_caller"
-	gem 'quiet_assets'
-	gem 'pry-rails'
+  gem "better_errors"
+  gem "binding_of_caller"
+  gem 'quiet_assets'
+  gem 'pry-rails'
 end
 
 group :test, :development do
-	gem 'rspec-rails'
-	gem 'factory_girl_rails'
-	gem "growl"
-	gem 'guard'
-	# gem 'guard-zeus'
-	gem 'guard-rspec', require: false
-	gem 'guard-livereload', require: false
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+  gem "growl"
+  gem 'guard'
+  # gem 'guard-zeus'
+  gem 'guard-rspec', require: false
+  gem 'guard-livereload', require: false
   gem "guard-bundler"
   gem "rb-inotify", require: false
   gem "rb-fsevent", require: false
@@ -55,7 +55,7 @@ group :test, :development do
 end
 
 group :test do
-	gem 'shoulda-matchers'
+  gem 'shoulda-matchers'
   gem 'capybara'
   gem 'launchy'
 end

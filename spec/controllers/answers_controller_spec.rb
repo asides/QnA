@@ -6,7 +6,7 @@ RSpec.describe AnswersController, :type => :controller do
   let(:answer) { create(:answer) }
   let(:attributes) { attributes_for(:answer) }
 
-	describe "GET #new" do
+  describe "GET #new" do
     before { get :new, question_id: question}
 
     it "assigns the requested question to @question" do
@@ -20,7 +20,7 @@ RSpec.describe AnswersController, :type => :controller do
     it "render new view" do
       expect(response).to render_template :new
     end
-	end
+  end
 
   describe "POST #create" do
     let(:post_create) { post :create, question_id: question, answer: attributes }

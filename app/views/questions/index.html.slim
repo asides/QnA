@@ -1,8 +1,8 @@
 a.btn.btn-default href=new_question_path Создать вопрос
 hr
 - if @questions.empty?
-	.well Еще не создан ни один вопрос
+  .well Еще не создан ни один вопрос
 - else
-	ul
-		- @questions.each do |q|
-			li= link_to q.title, question_url(q)
+  ul
+    - @questions.each do |q|
+      li= link_to q.title, question_url(q)
