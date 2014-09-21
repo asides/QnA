@@ -31,6 +31,7 @@ gem 'simple_form'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
 gem 'devise'
+gem 'rails-i18n'
 gem 'devise-i18n', github: 'tigrish/devise-i18n', branch: 'master'
 
 group :development do

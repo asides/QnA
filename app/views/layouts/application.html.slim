@@ -12,8 +12,8 @@ html
         .navbar-header
           a.navbar-brand href=root_path  Вопросы и ответы. Учебный проект.
           ul.nav.navbar-nav
-          li.active
-            a href=questions_path  Список вопросов
+            li.active
+              a href=questions_path  Список вопросов
     / - if flash[:notice]
     /     .container-fluid
     /       .alert.alert-warning.fade.in.col-md-3 role="alert"
@@ -21,6 +21,9 @@ html
     /           span aria-hidden="true" ×
     /           span class="sr-only" Close
     /         = flash[:notice]
-    p.notice = notice
-    p.alert = alert
-    = yield
+    .container-fluid
+      - if notice
+        .alert.alert-info.notice = notice
+      - if alert
+        .alert.alert-danger.alert = alert
+      = yield
