@@ -31,6 +31,7 @@ gem 'simple_form'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
 gem 'devise'
+gem 'devise-i18n', github: 'tigrish/devise-i18n', branch: 'master'
 
 group :development do
 	gem "better_errors"
@@ -56,6 +57,7 @@ end
 group :test do
 	gem 'shoulda-matchers'
   gem 'capybara'
+  gem 'launchy'
 end
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
