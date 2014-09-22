@@ -1,4 +1,4 @@
-a.btn.btn-default href=new_question_path Создать вопрос
+= link_to 'Создать новый вопрос', new_question_path, class: 'btn btn-primary'
 hr
 - if @questions.empty?
   .well Еще не создан ни один вопрос
