@@ -4,14 +4,13 @@ feature "Create question", %q{
 Для того чтобы получить ответ от сообщества
 Как аутентифицированный пользователь
 Я хочу задавать вопросы
-  } do
+} do
+
+  given(:user) { create(:user) }
   scenario "Аутентифицированный пользователь создает вопрос" do
     User.create!(email: 'user@test.com', password: '12345678')
 
-    visit new_user_session_path
-    fill_in 'Email', with: 'user@test.com'
-    fill_in 'Password', with: '12345678'
-    click_on 'Sign in'
+    sign_in(user)
 
     visit questions_path
     click_on 'Создать новый вопрос'

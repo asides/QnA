@@ -5,13 +5,10 @@ feature 'Вход пользователя', %q{
   Как пользователь
   Я хочу войти
 } do
-  scenario 'Зарегистрированный пользователь пытается войти' do
-    User.create!(email: 'user@test.com', password: '12345678')
 
-    visit new_user_session_path
-    fill_in 'Email', with: 'user@test.com'
-    fill_in 'Password', with: '12345678'
-    click_on 'Sign in'
+  given(:user) { create(:user) }
+  scenario 'Зарегистрированный пользователь пытается войти' do
+    sign_in(user)
 
     expect(page).to have_content 'Вход в систему выполнен.'
     expect(current_path).to eq root_path
