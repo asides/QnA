@@ -5,4 +5,4 @@ hr
 - else
   ul
     - @questions.each do |q|
-      li= link_to q.title, question_url(q)
+      li.last_question= link_to q.title, question_url(q)

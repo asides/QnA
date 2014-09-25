@@ -119,6 +119,7 @@ GEM
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
+    lorem_ipsum_amet (0.6.2)
     lumberjack (1.0.9)
     mail (2.6.1)
       mime-types (>= 1.16, < 3)
@@ -260,6 +261,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   launchy
+  lorem_ipsum_amet
   pry-rails
   quiet_assets
   rails (= 4.1.6)

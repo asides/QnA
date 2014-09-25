@@ -8,12 +8,12 @@ feature "Create question", %q{
 
   given(:user) { create(:user) }
   scenario "Аутентифицированный пользователь создает вопрос" do
-    User.create!(email: 'user@test.com', password: '12345678')
+    #User.create!(email: 'user@test.com', password: '12345678')
 
     sign_in(user)
 
     visit questions_path
-    click_on 'Создать новый вопрос'
+    click_on 'Create'
     fill_in "Title", with: "Test question"
     fill_in "Body", with: "text text"
     click_on 'Create'
@@ -23,7 +23,7 @@ feature "Create question", %q{
 
   scenario 'Не аутентифицированный пользователь пытается создать вопрос' do
     visit questions_path
-    click_on 'Создать новый вопрос'
+    click_on 'Create'
 
     expect(page).to have_content 'Вам необходимо войти в систему или зарегистрироваться.'
   end

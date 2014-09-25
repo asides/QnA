@@ -42,6 +42,7 @@ group :development do
 end
 
 group :test, :development do
+  gem 'lorem_ipsum_amet'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem "growl"
