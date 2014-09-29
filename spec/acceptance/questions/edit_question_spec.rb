@@ -9,16 +9,20 @@ feature "Edit question" do
     visit question_path(question)
     click_on 'Edit'
     fill_in 'Body', with: 'text text'
-    click_on 'Save'
+    click_on 'Create'
 
     within('.question') do
       expect(page).to have_content 'text text'
     end
   end
 
-  scenario "Не аутентифицированный пользователь редактирует вопрос" do
+  scenario "Аутентифицированный пользователь не может редактировать чужой вопрос"
+  
+  scenario "Гость не может редактировать вопросы" do
     visit question_path(question)
 
     expect(page).to_not have_button('Edit')
   end
+
+  
 end

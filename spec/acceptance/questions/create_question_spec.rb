@@ -21,7 +21,9 @@ feature "Create question", %q{
     expect(page).to have_content 'Ваш вопрос успешно добавлен!'
   end
 
-  scenario 'Не аутентифицированный пользователь пытается создать вопрос' do
+  scenario "Аутентифицированный пользователь создает вопрос с не валидными данными"
+
+  scenario "Гость не может создать вопрос" do
     visit questions_path
     click_on 'Create'
 
