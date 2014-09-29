@@ -8,7 +8,7 @@ feature "Аутентифицированный пользователь мож�
     expect(page).to have_content("Выход из системы выполнен.")
   end
   scenario "Гость не может выйти" do
-    visit destroy_user_session_path
-    expect(page).to have_content("Выход из системы уже выполнен")
+    visit root_path
+    expect(page).to_not have_link("Выход", href: destroy_user_session_path)
   end
 end
