@@ -11,13 +11,17 @@ html
       .container-fluid
         .navbar-header
           a.navbar-brand href=root_path  Вопросы и ответы. Учебный проект.
-          ul.nav.navbar-nav
-            li.active
-              a href=questions_path  Список вопросов
-          #user_info
-            - if user_signed_in?
-                p =current_user.name
-            = display_user_link
+        ul.nav.navbar-nav
+          li.active
+            a href=questions_path  Список вопросов
+        ul#user_info.nav.navbar-nav.navbar-right
+          - if user_signed_in?
+              li 
+                strong =current_user.name
+                = link_to "Выход", destroy_user_session_path, method: :delete, class: "btn btn-sm btn-default"
+          - else
+              li =link_to "Войти", new_user_session_path, class: "btn btn-sm btn-default"
+              li =link_to "Регистрация", new_user_registration_path, class: "btn btn-sm btn-default"
     / - if flash[:notice]
     /     .container-fluid
     /       .alert.alert-warning.fade.in.col-md-3 role="alert"
@@ -25,7 +29,7 @@ html
     /           span aria-hidden="true" ×
     /           span class="sr-only" Close
     /         = flash[:notice]
-    .container-fluid
+    .container
       - if notice
         .alert.alert-info.notice = notice
       - if alert

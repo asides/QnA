@@ -6,6 +6,7 @@ feature "Аутентифицированный пользователь мож�
     visit root_path
     click_on "Выход"
     expect(page).to have_content("Выход из системы выполнен.")
+    expect(current_path).to eq root_path
   end
   scenario "Гость не может выйти" do
     visit root_path
