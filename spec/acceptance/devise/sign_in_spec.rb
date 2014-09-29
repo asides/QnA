@@ -12,7 +12,8 @@ feature 'Вход пользователя' do
 
     within "#user_info" do
       expect(page).to have_content user.name
-      expect(page).to have_link destroy_user_session_path
+      #save_and_open_page
+      expect(page).to have_link("Выход", href: destroy_user_session_path)
     end
   end
 
