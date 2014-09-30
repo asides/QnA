@@ -3,13 +3,20 @@ require "rails_helper"
 feature "Посетитель может просматривать список вопросов на главной" do
 
   scenario "Посетитель видит список последних вопросов на главной странице" do
-    questions = create_list(:question, 20)
+    questions = create_list(:question, 3)
     visit root_path
-    expect(page).to have_css('last_question', count: 15)
+    expect(page).to have_content('MyString', count: 3)
   end
 
-  scenario "Посетитель видит сообщение если вопросов в базе нет" 
+  scenario "Посетитель видит сообщение если вопросов в базе нет" do
+    visit root_path
+    expect(page).to have_content 'Еще не создан ни один вопрос'
+  end 
 
-  scenario "Посетитель видит общее количество вопросов в базе на главной странице"
+  scenario "Посетитель видит общее количество вопросов в базе на главной странице" do
+    questions = create_list(:question, 3)
+    visit root_path
+    expect(page).to have_content "Всего задано вопросов - #{Question.count}"
+  end
 
 end
