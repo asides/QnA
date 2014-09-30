@@ -22,13 +22,6 @@ html
           - else
               li =link_to "Войти", new_user_session_path, class: "btn btn-sm btn-default"
               li =link_to "Регистрация", new_user_registration_path, class: "btn btn-sm btn-default"
-    / - if flash[:notice]
-    /     .container-fluid
-    /       .alert.alert-warning.fade.in.col-md-3 role="alert"
-    /         button type="button" class="close" data-dismiss="alert"
-    /           span aria-hidden="true" ×
-    /           span class="sr-only" Close
-    /         = flash[:notice]
     .container
       - if notice
         .alert.alert-info.notice = notice

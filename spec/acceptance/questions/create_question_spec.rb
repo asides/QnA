@@ -1,32 +1,34 @@
 require "rails_helper"
 
-feature "Create question", %q{
-Для того чтобы получить ответ от сообщества
-Как аутентифицированный пользователь
-Я хочу задавать вопросы
-} do
+feature "Создание вопроса" do
 
   given(:user) { create(:user) }
   scenario "Аутентифицированный пользователь создает вопрос" do
-    #User.create!(email: 'user@test.com', password: '12345678')
-
-    sign_in(user)
+    sign_in user
 
     visit questions_path
-    click_on 'Create'
+    click_on 'Создать новый вопрос'
     fill_in "Title", with: "Test question"
     fill_in "Body", with: "text text"
-    click_on 'Create'
+    click_on 'Сохранить вопрос'
 
     expect(page).to have_content 'Ваш вопрос успешно добавлен!'
   end
 
-  scenario "Аутентифицированный пользователь создает вопрос с не валидными данными"
+  scenario "Аутентифицированный пользователь создает вопрос с не валидными данными" do
+    sign_in user
+    visit new_question_path
+
+    fill_in "Title", with: ''
+    fill_in "Body", with: '' 
+    click_on 'Сохранить вопрос'
+
+    expect(current_path).to eq questions_path
+    expect(page).to have_content "не может быть пустым"
+  end
 
   scenario "Гость не может создать вопрос" do
     visit questions_path
-    click_on 'Create'
-
-    expect(page).to have_content 'Вам необходимо войти в систему или зарегистрироваться.'
+    expect(page).to_not have_link "Создать новый вопрос", href: new_question_path
   end
 end
