@@ -19,10 +19,14 @@ feature 'Вход пользователя' do
 
   scenario 'Не зарегистрованный пользователь пытается войти' do
     visit new_user_session_path
+    
     fill_in 'Email', with: 'wrong@test.com'
     fill_in 'Password', with: '12345678'
-    click_on 'Войти'
 
+    within "form" do
+      click_on 'Войти'
+    end
+    
     expect(page).to have_content 'Неверный адрес эл. почты или пароль.'
     expect(current_path).to eq new_user_session_path
   end
