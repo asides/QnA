@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative "../acceptance_helper"
 
 feature "Автор вопроса может отметить один ответ как верный" do
   scenario "Автор отмечает ответ как верный"

@@ -16,9 +16,8 @@ h1
   .answers
     = render 'answers'
 
-      / strong = answer.user.name
   hr
   = simple_form_for [ @question, @answer ], remote: true do |f|
+    #answer-errors
     = f.input :body, label: 'Ваш ответ'
     = f.submit 'Ответить на вопрос'
-  /= link_to "Ответить на вопрос", new_question_answer_path(@question), class: 'btn btn-primary'

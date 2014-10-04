@@ -1,4 +1,4 @@
-require "rails_helper"
+require_relative "../acceptance_helper"
 
 feature "Посетитель может просматривать список вопросов на главной" do
 

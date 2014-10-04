@@ -1,4 +1,4 @@
-require "rails_helper"
+require_relative "../acceptance_helper"
 
 feature "Аутентифицированный пользователь может завершить свою ссесию работы с сайтом" do
   scenario "Аутентифицированный пользователь выходит" do

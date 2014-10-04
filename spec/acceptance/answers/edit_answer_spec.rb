@@ -1,5 +1,4 @@
-require 'rails_helper'
-
+require_relative "../acceptance_helper"
 feature "Автор ответа может редактировать свои ответы" do
   scenario "Автор ответа редактирует свой ответ"
   scenario "Аутентифицированный пользователь не может редактировать чужой ответ"

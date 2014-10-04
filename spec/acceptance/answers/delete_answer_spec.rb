@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative "../acceptance_helper"
 
 feature "Автор ответа может удалять свои ответы" do
   scenario "Автор ответа удаляет свой ответ"

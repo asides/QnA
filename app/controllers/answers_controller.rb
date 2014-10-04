@@ -7,7 +7,7 @@ class AnswersController < ApplicationController
   end
 
   def create
-    @question.answers.create(answer_params)  
+    @answer = @question.answers.create(answer_params) 
   end
 
   def edit

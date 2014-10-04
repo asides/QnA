@@ -1,4 +1,4 @@
-require "rails_helper"
+require_relative "../acceptance_helper"
 
 feature "Автор вопроса может удалить свой вопрос" do
   given(:user) { create(:user) }

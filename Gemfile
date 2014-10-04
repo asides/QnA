@@ -48,7 +48,7 @@ group :test, :development do
   gem 'factory_girl_rails'
   
   gem 'capybara'
-  gem 'selenium-webdriver'
+  gem 'capybara-webkit'
   gem 'database_cleaner'
   gem 'launchy'
   gem 'growl'
