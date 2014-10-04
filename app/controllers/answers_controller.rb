@@ -7,8 +7,7 @@ class AnswersController < ApplicationController
   end
 
   def create
-    @question.answers.create(answer_params)
-    redirect_to question_path(@question)
+    @question.answers.create(answer_params)  
   end
 
   def edit

@@ -43,23 +43,27 @@ end
 
 group :test, :development do
   gem 'lorem_ipsum_amet'
+  
   gem 'rspec-rails'
   gem 'factory_girl_rails'
-  gem "growl"
+  
+  gem 'capybara'
+  gem 'selenium-webdriver'
+  gem 'database_cleaner'
+  gem 'launchy'
+  gem 'growl'
   gem 'guard'
   # gem 'guard-zeus'
   gem 'guard-rspec', require: false
   gem 'guard-livereload', require: false
-  gem "guard-bundler"
-  gem "rb-inotify", require: false
-  gem "rb-fsevent", require: false
-  gem "rb-fchange", require: false
+  gem 'guard-bundler'
+  gem 'rb-inotify', require: false
+  gem 'rb-fsevent', require: false
+  gem 'rb-fchange', require: false
 end
 
 group :test do
   gem 'shoulda-matchers'
-  gem 'capybara'
-  gem 'launchy'
 end
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

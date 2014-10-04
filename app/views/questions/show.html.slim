@@ -14,11 +14,11 @@ h1
   h2 Ответы.
   p Всего отетов: #{@question.answers.count}
   .answers
-    - @question.answers.each do |answer|
-      .well.well-small
-        p = answer.body
+    = render 'answers'
+
+      / strong = answer.user.name
   hr
-  = simple_form_for [ @question, @answer ] do |f|
+  = simple_form_for [ @question, @answer ], remote: true do |f|
     = f.input :body, label: 'Ваш ответ'
     = f.submit 'Ответить на вопрос'
   /= link_to "Ответить на вопрос", new_question_answer_path(@question), class: 'btn btn-primary'
