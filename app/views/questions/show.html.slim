@@ -11,15 +11,14 @@ h1
       = link_to "Удалить вопрос", question_path(@question), method: :delete, data: { confirm: 'Действительно удалить?' }, class: 'btn btn-danger'
 
 .col-md-6
-  - if @question.answers
-    h2 Ответы.
-    p
-      | Всего отетов: #{@question.answers.count}
+  h2 Ответы.
+  p Всего отетов: #{@question.answers.count}
+  .answers
     - @question.answers.each do |answer|
       .well.well-small
         p = answer.body
-        /.btn-group
-          /= link_to 'Edit', edit_answer_path(answer), class: 'btn btn-sm btn-warning'
-          /= link_to "Удалить ответ", answer_path(answer), method: :delete, data: { confirm: 'Действительно удалить?' }, class: 'btn btn-sm btn-danger'
   hr
-  = link_to "Ответить на вопрос", new_question_answer_path(@question), class: 'btn btn-primary'
+  = simple_form_for [ @question, @answer ] do |f|
+    = f.input :body, label: 'Ваш ответ'
+    = f.submit 'Ответить на вопрос'
+  /= link_to "Ответить на вопрос", new_question_answer_path(@question), class: 'btn btn-primary'

@@ -6,33 +6,17 @@ RSpec.describe AnswersController, :type => :controller do
   let(:answer) { create(:answer) }
   let(:attributes) { attributes_for(:answer) }
 
-  describe "GET #new" do
-    before { get :new, question_id: question}
-
-    it "assigns the requested question to @question" do
-      expect(assigns(:question)).to eq question
-    end
-
-    it "assigns new answer to @answer" do
-      expect(assigns(:answer)).to be_a_new(Answer)
-    end
-
-    it "render new view" do
-      expect(response).to render_template :new
-    end
-  end
-
   describe "POST #create" do
-    let(:post_create) { post :create, question_id: question, answer: attributes }
+    let(:post_create) { post :create, answer: attributes, question_id: question }
 
     context 'with valid attributes' do
       it "save new answer to DB" do
-        expect{ post_create }.to change(Answer, :count).by(1)
+        expect{ post_create }.to change(question.answers, :count).by(1)
       end
 
-      it "redirect to question" do
+      it "redirect to question show view" do
         post_create
-        expect(response).to redirect_to question
+        expect(response).to redirect_to question_path(question)
       end
     end
 
@@ -43,66 +27,82 @@ RSpec.describe AnswersController, :type => :controller do
         expect{ post_create }.to_not change(Answer, :count)
       end
 
-      it "re-render new view" do
+      it "redirect to question show view" do
         post_create
-        expect(response).to render_template :new
+        expect(response).to redirect_to question_path(question)
       end
     end
   end
 
-  describe "GET #edit" do
-    before {get :edit, id: answer}
 
-    it "assigns the requested answer to @answer" do
-      expect(assigns(:answer)).to eq answer
-    end
+  # describe "GET #new" do
+  #   before { get :new, question_id: question}
 
-    it "render edit view" do
-      expect(response).to render_template :edit
-    end
-  end
+  #   it "assigns the requested question to @question" do
+  #     expect(assigns(:question)).to eq question
+  #   end
 
-  describe "PATCH #update" do
-    before {patch :update, id: answer, answer: attributes}
+  #   it "assigns new answer to @answer" do
+  #     expect(assigns(:answer)).to be_a_new(Answer)
+  #   end
 
-    context 'with valid attributes' do
-      let(:attributes) { { body: '123' } }
+  #   it "render new view" do
+  #     expect(response).to render_template :new
+  #   end
+  # end
 
-      it "update answer record" do
-        answer.reload
-        expect(answer.body).to eq '123'
-      end
+  # describe "GET #edit" do
+  #   before {get :edit, id: answer}
 
-      it "redirects to the associated question" do
-        patch :update, id: answer, answer: { body: '123' }
-        expect(response).to redirect_to answer.question
-      end
-    end
+  #   it "assigns the requested answer to @answer" do
+  #     expect(assigns(:answer)).to eq answer
+  #   end
 
-    context 'with invalid attributes' do
-      let(:attributes) { { body: nil } }
+  #   it "render edit view" do
+  #     expect(response).to render_template :edit
+  #   end
+  # end
 
-      it "does not save record" do
-        expect(answer.body).to eq 'MyText'
-      end
+  # describe "PATCH #update" do
+  #   before {patch :update, id: answer, answer: attributes}
 
-      it "re-renders edit view" do
-        expect(response).to render_template :edit
-      end
-    end
-  end
+  #   context 'with valid attributes' do
+  #     let(:attributes) { { body: '123' } }
 
-  describe "DELETE #destroy" do
-    before { answer }
+  #     it "update answer record" do
+  #       answer.reload
+  #       expect(answer.body).to eq '123'
+  #     end
 
-    it "deletes answer" do
-      expect { delete :destroy, id: answer }.to change(Answer, :count).by(-1)
-    end
+  #     it "redirects to the associated question" do
+  #       patch :update, id: answer, answer: { body: '123' }
+  #       expect(response).to redirect_to answer.question
+  #     end
+  #   end
 
-    it "redirects to associated question" do
-      delete :destroy, id: answer
-      expect(response).to redirect_to answer.question
-    end
+  #   context 'with invalid attributes' do
+  #     let(:attributes) { { body: nil } }
 
-  end
+  #     it "does not save record" do
+  #       expect(answer.body).to eq 'MyText'
+  #     end
+
+  #     it "re-renders edit view" do
+  #       expect(response).to render_template :edit
+  #     end
+  #   end
+  # end
+
+  # describe "DELETE #destroy" do
+  #   before { answer }
+
+  #   it "deletes answer" do
+  #     expect { delete :destroy, id: answer }.to change(Answer, :count).by(-1)
+  #   end
+
+  #   it "redirects to associated question" do
+  #     delete :destroy, id: answer
+  #     expect(response).to redirect_to answer.question
+  #   end
+  # end
 end

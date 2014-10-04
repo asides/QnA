@@ -7,13 +7,8 @@ class AnswersController < ApplicationController
   end
 
   def create
-    @answer = Answer.new(answer_params.merge({question: @question}))
-
-    if @answer.save
-      redirect_to @question
-    else
-      render :new
-    end
+    @question.answers.create(answer_params)
+    redirect_to question_path(@question)
   end
 
   def edit
