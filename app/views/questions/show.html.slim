@@ -1,18 +1,15 @@
-h1
-  | Вопрос №#{@question.id}
-#question.panel.panel-default
-  .panel-heading
-    = @question.title
-  .panel-body
-    = @question.body
-- if current_user == @question.user
+#question
+  h1= @question.title
+  p = @question.body
+  p Author: = @question.user.name
+  
+  - if current_user == @question.user
     .btn-group
-      = link_to 'Edit', edit_question_path(@question), class: 'btn btn-warning'
-      = link_to "Удалить вопрос", question_path(@question), method: :delete, data: { confirm: 'Действительно удалить?' }, class: 'btn btn-danger'
+      = link_to 'Edit', edit_question_path(@question), class: 'btn btn-sm btn-warning'
+      = link_to "Удалить вопрос", question_path(@question), method: :delete, data: { confirm: 'Действительно удалить?' }, class: 'btn btn-sm btn-danger'
 
 .col-md-6
   h2 Ответы.
-  p Всего отетов: #{@question.answers.count}
   .answers
     = render 'answers'
 

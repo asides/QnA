@@ -5,5 +5,6 @@ class Question < ActiveRecord::Base
 
   validates :title, length: { maximum: 255 }, presence: true
   validates :body, length: { maximum: 1000 }, presence: true
+  validates :user, presence: true
 
 end
