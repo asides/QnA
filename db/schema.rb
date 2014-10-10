@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141010195603) do
+ActiveRecord::Schema.define(version: 20141010200205) do
 
   create_table "answers", force: true do |t|
     t.text     "body"
@@ -26,7 +26,10 @@ ActiveRecord::Schema.define(version: 20141010195603) do
     t.string   "file"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "question_id"
   end
+
+  add_index "attachments", ["question_id"], name: "index_attachments_on_question_id"
 
   create_table "questions", force: true do |t|
     t.string   "title"
