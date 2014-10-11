@@ -16,3 +16,7 @@
 /tmp
 /tmux*.log
 /TODO
+/public/system
+/public/tmp
+/public/uploads
+/public/spec

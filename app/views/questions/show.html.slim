@@ -4,7 +4,7 @@
   p Attachments:
   ul
     - @question.attachments.each do |a|
-      li= link_to a.file.file.filename, a.file.url
+      li= link_to a.file.filename, a.file.url
   
   p Author: = @question.user.name
   
