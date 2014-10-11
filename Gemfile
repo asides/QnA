@@ -34,6 +34,7 @@ gem 'devise'
 gem 'rails-i18n'
 gem 'devise-i18n', github: 'tigrish/devise-i18n', branch: 'master'
 gem 'carrierwave'
+gem 'remotipart'
 
 group :development do
   gem "better_errors"

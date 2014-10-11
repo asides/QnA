@@ -13,7 +13,7 @@ feature "Добавление файлов к ответу", %q{
     visit question_path(question)
   end
 
-  scenario "Пользователь добавляет файлы к ответу" do
+  scenario "Пользователь добавляет файлы к ответу", js: true do
     fill_in "Ваш ответ", with: "text text"
     attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
     click_on 'Ответить на вопрос'
