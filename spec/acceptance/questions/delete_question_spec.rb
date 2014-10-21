@@ -14,6 +14,7 @@ feature "Автор вопроса может удалить свой вопро
     expect(current_path).to eq questions_path
     expect(page).to have_content "Question with id:#{question.id} deleted!"
   end
+  
   scenario "Аутентифицированный пользователь не может удалять вопросы другх пользователей" do
     sign_in user2   
     visit question_path(question)  
