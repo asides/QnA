@@ -20,3 +20,6 @@
 /public/tmp
 /public/uploads
 /public/spec
+/bin/*
+# /spec/terminal.glue
+terminal.glue
