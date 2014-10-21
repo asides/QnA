@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
-  before_action :load_question, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :load_question, only: [:show, :edit, :update, :destroy]
 
   def index
     @questions = Question.all
@@ -17,6 +17,9 @@ class QuestionsController < ApplicationController
   end
 
   def edit
+    unless @question.user == current_user
+      redirect_to question_path(@question)
+    end
   end
 
   def create
@@ -40,8 +43,13 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question.destroy
-    flash[:notice] = "Question with id:#{@question.id} deleted!"
+    if @question.user == current_user
+      @question.destroy
+      flash[:notice] = "Question with id:#{@question.id} deleted!"
+    else
+      flash[:notice] = "Вы не автор вопроса!"
+    end
+    
     redirect_to questions_path
   end
 

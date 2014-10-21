@@ -1,10 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, :type => :controller do
-  sign_in_user
-  let(:question) { create(:question, user: @user) }
   
-  describe "GET #index" do
+  let!(:user) { create(:user) }
+  let!(:user2) { create(:user) }
+  
+  let(:question) { create(:question, user: user) }
+  let(:question2) { create(:question, user: user2) }
+
+  sign_in_user
+
+  describe "GET #index", skip_sign_in: true do
     let(:questions) { create_list(:question, 2) }
     before { get :index }
 
@@ -17,8 +23,7 @@ RSpec.describe QuestionsController, :type => :controller do
     end
   end
 
-  describe "GET #show" do
-
+  describe "GET #show", skip_sign_in: true do
     before { get :show, id: question }
 
     it "assigns the requested question to @question" do
@@ -39,107 +44,171 @@ RSpec.describe QuestionsController, :type => :controller do
   end
 
   describe "GET #new" do
-    sign_in_user
     before { get :new }
 
-    it "assigns a new Questions to @question" do
-      expect(assigns(:question)).to be_a_new(Question)
+    context 'when user is sign in' do
+      it "assigns a new Questions to @question" do
+        expect(assigns(:question)).to be_a_new(Question)
+      end
+
+      it "build new attachment for question" do
+        expect(assigns(:question).attachments.first).to be_a_new(Attachment)
+      end
+
+      it "renders new view" do
+        expect(response).to render_template :new
+      end
     end
 
-    it "build new attachment for question" do
-      expect(assigns(:question).attachments.first).to be_a_new(Attachment)
-    end
-
-    it "renders new view" do
-      expect(response).to render_template :new
+    context 'when user is not sign in', skip_sign_in: true do
+      it 'redirect to sign in' do
+        expect(response).to redirect_to new_user_session_path      
+      end
     end
   end
 
   describe "GET #edit" do
-    sign_in_user
-    before { get :edit, id: question}
+    context 'when user logged in' do    
+      before { get :edit, id: question }
+      
+      it "assigns the requested question to @question" do
+        expect(assigns(:question)).to eq question
+      end
+      
+      context 'and user is author of the question' do
+        it "renders edit view" do
+          expect(response).to render_template :edit
+        end
+      end
 
-    it "assigns the requested question to @question" do
-      expect(assigns(:question)).to eq question
+      context 'and user is not author of the question' do    
+        it 'redirects to question' do
+          get :edit, id: question2
+          expect(response).to redirect_to question_path(question2)
+        end
+      end
+
     end
 
-    it "renders edit view" do
-      expect(response).to render_template :edit
+    context 'when user not logged in', skip_sign_in: true do   
+      it "redirects to sign in" do
+        get :edit, id: question
+        expect(response).to redirect_to new_user_session_path
+      end
     end
+
   end
 
   describe "POST #create" do
-    
-    context 'with valid attributes' do
-      it "saves the new question in DB" do
-        expect { post :create, question: attributes_for(:question, user: @user) }.to change(Question, :count).by(1)
+    context 'when user logged in' do
+      context 'with valid attributes' do
+        it "saves the new question in DB" do
+          expect { post :create, question: attributes_for(:question, user: @user) }.to change(Question, :count).by(1)
+        end
+
+        it "redirects to show view" do
+          post :create, question: attributes_for(:question, user: @user)
+          expect(response).to redirect_to question_path(assigns(:question))
+        end
       end
 
-      it "redirects to show view" do
-        post :create, question: attributes_for(:question, user: @user)
-        expect(response).to redirect_to question_path(assigns(:question))
+      context 'with invalid attributes' do
+        it "does not saves question in DB" do
+          expect { post :create, question: attributes_for(:invalid_question) }.to_not change(Question, :count)
+        end
+
+        it "re-renders new view" do
+          post :create, question: attributes_for(:invalid_question)
+          expect(response).to render_template :new
+        end
       end
     end
 
-    context 'with invalid attributes' do
-      it "does not saves question in DB" do
-        expect { post :create, question: attributes_for(:invalid_question) }.to_not change(Question, :count)
-      end
-
-      it "re-renders new view" do
-        post :create, question: attributes_for(:invalid_question)
-        expect(response).to render_template :new
-      end
+    context 'when user not logged in', skip_sign_in: true do 
+      it 'redirects to sign in' do
+        post :create, question: attributes_for(:question)
+        expect(response).to redirect_to new_user_session_path
+      end      
     end
   end
 
   describe "PATCH #update" do
-    sign_in_user
-    context 'valid attributes' do
-      it "assigns the requested question to @question" do
-        patch :update, id: question, question: attributes_for(:question)
-        expect(assigns(:question)).to eq question
-      end
+    context 'when user logged in' do
+      context 'and user is author of the question' do
+        context 'whith valid attributes' do
+          it "assigns the requested question to @question" do
+            patch :update, id: question, question: attributes_for(:question)
+            expect(assigns(:question)).to eq question
+          end
 
-      it "changes question attributes" do
-        patch :update, id: question, question: { title: "new title", body: "new body" }
-        question.reload
-        expect(question.title).to eq "new title"
-        expect(question.body).to eq "new body"
-      end
+          it "changes question attributes" do
+            patch :update, id: question, question: { title: "new title", body: "new body" }
+            question.reload
+            expect(question.title).to eq "new title"
+            expect(question.body).to eq "new body"
+          end
 
-      it "redirects to the updated question" do
-        patch :update, id: question, question: attributes_for(:question)
-        expect(response).to redirect_to question
+          it "redirects to the updated question" do
+            patch :update, id: question, question: attributes_for(:question)
+            expect(response).to redirect_to question
+          end
+        end
+
+        context 'whith invalid attributes' do
+          before { patch :update, id: question, question: { title: "new title", body: nil } }
+
+          it "does not change question attributes" do
+            question.reload
+            expect(question.title).to eq "MyString"
+            expect(question.body).to eq "MyText"
+          end
+
+          it "re-renders edit view" do
+            expect(response).to render_template :edit
+          end
+        end
+      end
+      
+      context 'and user is not author of the question' do
+        it 'redirects to question show' do
+          patch :update, id: question2, question: attributes_for(:question)
+          expect(response).to redirect_to question_path(question2)
+        end
       end
     end
 
-    context 'invalid attributes' do
-      before { patch :update, id: question, question: { title: "new title", body: nil } }
-
-      it "does not change question attributes" do
-        question.reload
-        expect(question.title).to eq "MyString"
-        expect(question.body).to eq "MyText"
-      end
-
-      it "re-renders edit view" do
-        expect(response).to render_template :edit
+    context 'when user not logged in', skip_sign_in: true do
+      it 'redirects to sign in' do
+        patch :update, id: question, question: attributes_for(:question)
+        expect(response).to redirect_to new_user_session_path
       end
     end
   end
 
   describe "DELETE #destroy" do
-    sign_in_user
-    before { question }
+    before {question}
+    before {question2}
+    
+    context 'when user logged in' do
+      it "with author deletes question" do
+        expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
+      end
 
-    it "deletes question" do
-      expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
+      it "with other user deletes question" do
+        expect { delete :destroy, id: question2 }.to_not change(Question, :count)
+      end
+
+      it "redirect to index view" do
+        delete :destroy, id: question
+        expect(response).to redirect_to questions_path
+      end
     end
 
-    it "redirect to index view" do
-      delete :destroy, id: question
-      expect(response).to redirect_to questions_path
+    context 'when user not logged in', skip_sign_in: true do
+      it 'redirects to sign in' do
+        delete :destroy, id: question
+        expect(response).to redirect_to new_user_session_path
+      end
     end
   end
 
