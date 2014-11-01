@@ -2,20 +2,28 @@ require_relative '../acceptance_helper'
 
 feature 'Автор ответа может редактировать свои ответы' do
   given(:user) { create(:user) }
-  given!(:question) { create(:question) }
-  given!(:answer) { create(:answer, question: question)}
-  
+  given(:other) { create(:user) }
+
+  given!(:question) { create(:question, user: user) }
+  given!(:question2) { create(:question, user: user) }
+
+  given!(:answer) { create(:answer, question: question, user: user)}
+  given!(:answer2) { create(:answer, question: question2, user: other)}
+
   scenario 'Гость не может редактировать ответы' do
     visit question_path(question)
-    expect(page).to_not have_link 'Редактировать'
+
+    within '.answers' do
+      expect(page).to_not have_link 'Редактировать'
+    end
   end
-  
+
   describe 'Аутентифицированный пользователь' do
     before do
       sign_in user
-      visit question_path(question)  
+      visit question_path(question)
     end
-    
+
     scenario 'видит ссылку на редактирование ответа' do
       within '.answers' do
         expect(page).to have_link 'Редактировать'
@@ -23,19 +31,21 @@ feature 'Автор ответа может редактировать свои 
     end
 
     scenario 'редактирует свой ответ', js: true do
-      click_on 'Редактировать'
       within '.answers' do
-        fill_in 'Answer', with: 'edited answer'
-        click_on 'Save'
-
+        click_on 'Редактировать'
+        fill_in 'Edit you answer', with: 'edited answer', match: :first
+        click_on 'Save answer'
         expect(page).to_not have_content answer.body
         expect(page).to have_content 'edited answer'
-        expect(page).to_not have_selector 'textarea'
       end
-
     end
 
-    scenario 'не может редактировать чужой ответ'    
+    scenario 'не может редактировать чужой ответ' do
+      visit question_path(question2)
+      within '.answers' do
+        expect(page).to_not have_link 'Редактировать'
+      end
+    end
   end
 
 end

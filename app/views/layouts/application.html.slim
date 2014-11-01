@@ -7,24 +7,11 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   body
-    nav.navbar.navbar-default role="navigation"
-      .container-fluid
-        .navbar-header
-          a.navbar-brand href=root_path  Вопросы и ответы. Учебный проект.
-        ul.nav.navbar-nav
-          li.active
-            a href=questions_path  Список вопросов
-        ul#user_info.nav.navbar-nav.navbar-right
-          - if user_signed_in?
-              li 
-                strong =current_user.name
-                = link_to "Выход", destroy_user_session_path, method: :delete, class: "btn btn-sm btn-default"
-          - else
-              li =link_to "Войти", new_user_session_path, class: "btn btn-sm btn-default"
-              li =link_to "Регистрация", new_user_registration_path, class: "btn btn-sm btn-default"
+    = render 'shared/topbar'
     .container
-      - if notice
-        .alert.alert-info.notice = notice
-      - if alert
-        .alert.alert-danger.alert = alert
-      = yield
+      .row
+        = render 'shared/header'
+      .row
+        .col-md-12
+          = render 'layouts/flash'
+          = yield

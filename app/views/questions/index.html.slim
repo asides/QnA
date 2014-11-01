@@ -1,10 +1,16 @@
-h1 Список вопросов
-- if user_signed_in?
-    = link_to 'Создать новый вопрос', new_question_path, class: 'btn btn-primary'
+h2 Список вопросов
 hr
-- if @questions.empty?
-  .well Еще не создан ни один вопрос
+- if @questions.present?
+  #questions
+    - @questions.each do |question|
+      div.media id="question_summary_#{question.id}"
+        .col-md-1.well.well-sm.statscontainer
+          p.text-center stats
+        .col-md-11.summary
+          h4= link_to question.title, question_url(question)
+          p.excerpt= truncate(question.body, length: 90)
+          footer.user-info
+            | Ask create -
+            i =question.user.name
 - else
-  ul
-    - @questions.each do |q|
-      li.last_question= link_to q.title, question_url(q)
+  p Еще не создан ни один вопрос

@@ -1,0 +1,4 @@
+require: rubocop-rspec
+
+Metrics/LineLength:
+  Max: 124

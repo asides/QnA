@@ -1,30 +1,43 @@
 class AnswersController < ApplicationController
 
-  # def new
-  #   @answer = Answer.new
-  # end
+  before_action :authenticate_user!
+
+  before_action :load_question, only: [:new, :create]
+  before_action :load_answer, only: [:update, :destroy]
+
+  # after_action :publish_answer, only: :create
+
+  respond_to :js
+  # respond_to :json, only: [:create, :destroy]
+  authorize_resource
 
   def create
-    @question = Question.find(params[:question_id])
-    @answer = @question.answers.create(answer_params) 
+    respond_with(@answer = @question.answers.create(answer_params.merge({ user: current_user })))
   end
 
-  # def edit
-  # end
-
   def update
-    @answer = Answer.find(params[:id])
     @answer.update(answer_params)
+    respond_with @answer
+  end
+
+  def destroy
+    respond_with(@answer.destroy)
+  end
+
+  private
+
+  def load_question
+    @question = Question.find(params[:question_id])
+  end
+
+  def load_answer
+    @answer = Answer.find(params[:id])
     @question = @answer.question
   end
 
-  # def destroy
-  #   @answer.destroy
-  #   flash[:notice] = "Answer with id:#{@answer.id} destroy!"
-  #   redirect_to @answer.question
-  # end
-
-  private
+  def publish_answer
+    PrivatePub.publish_to("/questions/#{@question.id}/answers", answer: @answer.to_json) if @answer.valid?
+  end
 
   def answer_params
     params.require(:answer).permit(:body, attachments_attributes: [:file])

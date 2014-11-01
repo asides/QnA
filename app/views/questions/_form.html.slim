@@ -1,10 +1,7 @@
 = simple_form_for @question do |f|
-  p= f.input :title
-  p= f.input :body
-  p Attachments:
+  = f.input :title
+  = f.input :body
+  = f.simple_fields_for :attachments, @question.attachments.build do |a|
+    = a.input :file, as: :file, wrapper: :vertical_file_input
 
-  p
-    = f.simple_fields_for :attachments do |a|
-      = a.input :file
-
-  p= f.submit 'Сохранить вопрос'
+  = f.button :submit, 'Сохранить вопрос'

@@ -1,0 +1,12 @@
+.navbar.navbar-default.navbar-fixed-top role='navigation'
+  .container
+    .navbar-header
+      a.navbar-brand href=root_path  Вопросы и ответы.
+
+    ul#user_info.nav.navbar-nav.navbar-right
+      - if user_signed_in?
+          li= link_to current_user.name, '#'
+          li= link_to 'Выход', destroy_user_session_path, method: :delete
+      - else
+          li= link_to 'Войти', new_user_session_path
+          li= link_to 'Регистрация', new_user_registration_path

@@ -2,55 +2,36 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :load_question, only: [:show, :edit, :update, :destroy]
 
+  respond_to :html
+
+  authorize_resource
+
   def index
-    @questions = Question.all
+    respond_with(@questions = Question.all)
   end
 
   def show
-    @answer = @question.answers.build
-    @answer.attachments.build
+    respond_with @question
   end
 
   def new
-    @question = Question.new
-    @question.attachments.build
+    respond_with(@question = Question.new)
   end
 
   def edit
-    unless @question.user == current_user
-      redirect_to question_path(@question)
-    end
   end
 
   def create
-    @question = Question.new(question_params)
-    @question.user = current_user if user_signed_in?
-    if @question.save
-      flash[:notice] = "Ваш вопрос успешно добавлен!"
-      redirect_to @question
-    else
-      render :new
-    end
+    respond_with(@question = current_user.questions.create(question_params))
   end
 
   def update
-    if @question.update(question_params)
-      flash[:notice] = "You Question now updated!"
-      redirect_to @question
-    else
-      render :edit
-    end
+    @question.update(question_params)
+    respond_with @question
   end
 
   def destroy
-    if @question.user == current_user
-      @question.destroy
-      flash[:notice] = "Question with id:#{@question.id} deleted!"
-    else
-      flash[:notice] = "Вы не автор вопроса!"
-    end
-    
-    redirect_to questions_path
+    respond_with @question.destroy
   end
 
   private

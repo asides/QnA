@@ -1,0 +1,10 @@
+- if parent.comments.present?
+  h4
+    i Comments
+  hr
+  = render parent.comments
+= link_to 'Add comment', '#', class: 'btn btn-sm btn-info add-comment-link', data: { parent_id: "#{parent.class.name.downcase}-#{parent.id}" }
+.new_comment
+  = simple_form_for [parent, parent.comments.build], html: {id: "new-comment-to-#{parent.class.to_s.downcase}-#{parent.id}"}, remote: true do |f|
+    = f.input :body, as: :text, label: 'Add new comment'
+    = f.button :submit, 'Send comment', class: 'btn-sm'

@@ -12,7 +12,7 @@ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer',  platforms: :ruby
+gem 'therubyracer',  platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -23,32 +23,42 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
 
-# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-gem 'spring',        group: :development
-
 gem 'slim-rails'
-gem 'simple_form'
+gem 'simple_form', '~> 3.1.0.rc1', github: 'plataformatec/simple_form'
+
 gem 'bootstrap-sass', '~> 3.2.0'
+# gem 'less-rails'
+# gem 'twitter-bootstrap-rails'
+# gem 'twitter-bootswatch-rails', '~> 3.2.0'
+# gem 'twitter-bootswatch-rails-helpers'
+
 gem 'autoprefixer-rails'
 gem 'devise'
 gem 'rails-i18n'
 gem 'devise-i18n'
 gem 'carrierwave'
 gem 'remotipart'
+gem 'responders'
+gem 'private_pub'
+gem 'thin'
+gem 'cancancan'
 
 group :development do
-  gem "better_errors"
-  gem "binding_of_caller"
+  gem 'spring'
+  gem 'better_errors'
+  gem 'binding_of_caller'
   gem 'quiet_assets'
   gem 'pry-rails'
+  gem 'rubocop', require: false
+  gem 'rubocop-rspec'
 end
 
 group :test, :development do
   gem 'lorem_ipsum_amet'
-  
+
   gem 'rspec-rails'
   gem 'factory_girl_rails'
-  
+
   gem 'capybara'
   gem 'capybara-webkit'
   gem 'database_cleaner'

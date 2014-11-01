@@ -11,16 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141011200924) do
+ActiveRecord::Schema.define(version: 20141027122634) do
 
   create_table "answers", force: true do |t|
     t.text     "body"
     t.integer  "question_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   add_index "answers", ["question_id"], name: "index_answers_on_question_id"
+  add_index "answers", ["user_id"], name: "index_answers_on_user_id"
 
   create_table "attachments", force: true do |t|
     t.string   "file"
@@ -32,6 +34,16 @@ ActiveRecord::Schema.define(version: 20141011200924) do
 
   add_index "attachments", ["attachmentable_id"], name: "index_attachments_on_attachmentable_id"
   add_index "attachments", ["attachmentable_type"], name: "index_attachments_on_attachmentable_type"
+
+  create_table "comments", force: true do |t|
+    t.string   "body"
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type"
 
   create_table "questions", force: true do |t|
     t.string   "title"
@@ -55,6 +67,7 @@ ActiveRecord::Schema.define(version: 20141011200924) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.string   "name"
+    t.boolean  "admin"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

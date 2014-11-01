@@ -58,7 +58,7 @@ end
 #   # watch(%r|^app/models/(.*)\.rb$|)      { |m| "test/unit/#{m[1]}_test.rb" }
 # end
 
-guard :bundler do
+guard :bundler, cmd: 'bundle install' do
   watch('Gemfile')
   # Uncomment next line if your Gemfile contains the `gemspec' command.
   # watch(/^.+\.gemspec/)
