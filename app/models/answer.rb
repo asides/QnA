@@ -12,4 +12,23 @@ class Answer < ActiveRecord::Base
   accepts_nested_attributes_for :attachments
 
   default_scope -> { order :created_at }
+
+  scope :best_answer, -> { where(best: true) }
+
+  def trigger_best!
+    best ? unset_best : set_best
+  end
+
+  private
+
+  def set_best
+    best_answer = question.answers.best_answer.first
+
+    best_answer.update(best: false) if best_answer
+    update best: true
+  end
+
+  def unset_best
+    update best: false
+  end
 end
