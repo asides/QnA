@@ -12,7 +12,7 @@ RSpec.describe Answer, type: :model do
 
   it { should accept_nested_attributes_for :attachments }
 
-  describe 'instance methods' do
+  describe '#trigger_best!' do
     let(:question) { create(:question) }
 
     let!(:answer) { create(:answer, question: question) }
@@ -23,15 +23,21 @@ RSpec.describe Answer, type: :model do
       it 'set answer as best' do
         answer.trigger_best!
         expect(answer).to be_best
+      end
 
+      it 'unset answer as best' do
+        answer.update(best: true)
         answer.trigger_best!
+
         expect(answer).to_not be_best
       end
 
       it 'only one answer will be set as best' do
         answer.trigger_best!
         answer2.trigger_best!
-        expect(question.answers.best_answer.count).to eq 1
+
+        expect(question.answers.where(best: true).count).to eq 1
+        expect(question.best_answer).to eq answer2
       end
     end
   end

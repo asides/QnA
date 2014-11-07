@@ -13,7 +13,6 @@ class Answer < ActiveRecord::Base
 
   default_scope -> { order :created_at }
 
-  scope :best_answer, -> { where(best: true) }
 
   def trigger_best!
     best ? unset_best : set_best
@@ -22,8 +21,7 @@ class Answer < ActiveRecord::Base
   private
 
   def set_best
-    best_answer = question.answers.best_answer.first
-
+    best_answer = question.best_answer
     best_answer.update(best: false) if best_answer
     update best: true
   end

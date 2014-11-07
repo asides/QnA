@@ -1,6 +1,6 @@
 h2 Список вопросов
 hr
-- if @questions.present?
+- if !@questions.empty?
   #questions
     - @questions.each do |question|
       div.media id="question_summary_#{question.id}"

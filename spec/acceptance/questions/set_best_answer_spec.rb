@@ -19,25 +19,35 @@ feature 'Автор вопроса может отметить один отве
   end
 
   scenario 'Автор отмечает ответ как верный', js: true do
-    within find("#answer-#{answer.id}") do
+    within "#answer-#{answer.id}" do
       expect(page).to_not have_selector('.best-answer')
 
-      find('a.set-best-answer').click
+      click_on 'It\'s best answer!'
 
       expect(page).to have_selector('.best-answer')
     end
   end
 
   scenario 'Автор удаляет метку верного ответа', js: true do
-    find("#answer-#{best_answer.id}").find('a.set-best-answer').click
+    within "#answer-#{best_answer.id}" do
+      click_on 'Unbest answer'
+    end
+
     expect(page).to_not have_selector('.best-answer')
   end
 
   scenario 'Автор вопроса не может отметить несколько ответов как верные', js: true do
-    find("#answer-#{answer.id}").find('a.set-best-answer').click
-    find("#answer-#{answer2.id}").find('a.set-best-answer').click
+    within "#answer-#{answer.id}" do
+      click_on 'It\'s best answer!'
+    end
+
+    within "#answer-#{answer2.id}" do
+      click_on 'It\'s best answer!'
+    end
 
     expect(page).to have_selector('.best-answer', count: 1)
+    expect(find("#answer-#{answer2.id}")).to have_selector('.best-answer')
+
   end
 
   # scenario 'Аутентифицированный пользователь не может отмечать ответы других пользователей' do

@@ -11,4 +11,8 @@ class Question < ActiveRecord::Base
   accepts_nested_attributes_for :attachments
 
   default_scope -> { order created_at: :desc }
+
+  def best_answer
+    self.answers.where(best: true).first
+  end
 end

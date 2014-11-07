@@ -4,6 +4,7 @@ feature 'Посетитель может просматривать список
 
   scenario 'Посетитель видит список последних вопросов на главной странице' do
     questions = create_list(:question, 3)
+    expect(Question.all).to_not be_empty
     visit root_path
     expect(page).to have_content('MyString', count: 3)
   end
