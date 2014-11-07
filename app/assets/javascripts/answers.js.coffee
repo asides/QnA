@@ -17,9 +17,9 @@ $ ->
   #   $.each errors, (index, value) ->
   #     $('#answer-errors').append(value)
 
-  questionId = $('.answers').data('questionId')
-  PrivatePub.subscribe '/questions/'+questionId+'/answers', (data, channel) ->
-    answer = $.parseJSON(data['answer'])
-    $('.answers').append('<p>'+answer.body+'</p>')
-    $('.answers').append('<p><a href="#">Edit</a></p>')
-    $('.new_answer #answer_body').val('');
+  # questionId = $('.answers').data('questionId')
+  # PrivatePub.subscribe '/questions/'+questionId+'/answers', (data, channel) ->
+  #   answer = $.parseJSON(data['answer'])
+  #   $('.answers').append('<p>'+answer.body+'</p>')
+  #   $('.answers').append('<p><a href="#">Edit</a></p>')
+  #   $('.new_answer #answer_body').val('');

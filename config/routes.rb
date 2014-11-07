@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   end
 
   resources :questions, concerns: :commentable, shallow: true do
-    resources :answers, concerns: :commentable
+    resources :answers, concerns: :commentable do
+      post :set_best, on: :member
+    end
   end
 
   root 'questions#index'

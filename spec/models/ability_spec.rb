@@ -30,6 +30,8 @@ RSpec.describe Ability, type: :model do
     it { should be_able_to :create, Answer }
     it { should be_able_to :create, Comment }
 
+    it { should be_able_to :set_best, Answer }
+
     it { should be_able_to :update, create(:question, user: user), user: user }
     it { should_not be_able_to :update, create(:question, user: other), user: user }
 
@@ -41,5 +43,6 @@ RSpec.describe Ability, type: :model do
 
     it { should be_able_to :destroy, create(:answer, user: user), user: user }
     it { should_not be_able_to :destroy, create(:answer, user: other), user: user }
+
   end
 end

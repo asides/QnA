@@ -5,7 +5,7 @@ RSpec.describe AnswersController, type: :controller do
   let!(:user) { create(:user) }
   let!(:user2) { create(:user) }
 
-  let!(:question) { create(:question) }
+  let!(:question) { create(:question, user: user) }
 
   sign_in_user
 
@@ -67,6 +67,16 @@ RSpec.describe AnswersController, type: :controller do
       patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
       expect(response).to render_template :update
     end
+  end
+
+  describe 'POST #set_best' do
+    let(:answer) { create(:answer, question: question) }
+
+    it 'set best_answer' do
+      post :set_best, id: answer, format: :js
+      expect(answer.reload).to be_best
+    end
+
   end
 
   # describe 'GET #new' do

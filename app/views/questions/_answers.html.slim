@@ -5,16 +5,28 @@ hr
    i Еще никто не отвечал. Будьте первым!
 - @question.answers.each do |answer|
   - if answer.persisted?
-    .well.well-sm.answer id="answer-#{answer.id}"
-      p= answer.body
-      p.text-info= answer.user.name if answer.user
-      ul
-        - answer.attachments.each do |a|
-          li= link_to a.file.identifier, a.file.url
-
-      - if can?(:update, answer)
-          = link_to 'Редактировать', '#', class: 'btn btn-sm btn-primary edit-answer-link', data: { answer_id: answer.id }
-          = link_to 'Удалить', answer_path(answer), class: 'btn btn-sm btn-danger', method: :delete, remote: true
+    .panel.panel-default.answer id="answer-#{answer.id}"
+      .panel-heading
+        - if answer.best
+          span
+            i.glyphicon.glyphicon-ok-circle.best-answer
+          = link_to 'Unbest answer', set_best_answer_path(answer), class: 'set-best-answer', data: { answer_id: answer.id }, remote: true, method: :post
+        - else
+          = link_to 'It\'s best answer!', set_best_answer_path(answer), class: 'btn btn-default set-best-answer', data: { answer_id: answer.id }, remote: true, method: :post
+      .panel-body
+        p= answer.body
+        ul
+          - answer.attachments.each do |a|
+            li= link_to a.file.identifier, a.file.url
+      .panel-footer
+          p
+            ' Answered:
+            i.text-info= I18n.localize(answer.created_at.localtime, format: '%e %b, %T, %Y')
+            '  as
+            strong.text-info= answer.user.name
+          - if can?(:update, answer)
+            = link_to 'Редактировать', '#', class: 'btn btn-sm btn-primary edit-answer-link', data: { answer_id: answer.id }
+            = link_to 'Удалить', answer_path(answer), class: 'btn btn-sm btn-danger', method: :delete, remote: true
 
           .edit_answer
             = simple_form_for answer, remote: true, html: {id: "edit-answer-#{answer.id}"} do |f|

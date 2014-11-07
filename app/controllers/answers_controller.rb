@@ -3,7 +3,7 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
 
   before_action :load_question, only: [:new, :create]
-  before_action :load_answer, only: [:update, :destroy]
+  before_action :load_answer, only: [:update, :destroy, :set_best]
 
   # after_action :publish_answer, only: :create
 
@@ -24,6 +24,10 @@ class AnswersController < ApplicationController
     respond_with(@answer.destroy)
   end
 
+  def set_best
+    respond_with @answer.trigger_best!
+  end
+
   private
 
   def load_question
@@ -40,6 +44,6 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body, attachments_attributes: [:file])
+    params.require(:answer).permit(:body, :user_id, :question_id, attachments_attributes: [:file])
   end
 end
