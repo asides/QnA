@@ -20,8 +20,14 @@ RSpec.describe Ability, type: :model do
   end
 
   describe 'for user' do
+    # users
     let(:user) { create(:user) }
     let(:other) { create(:user) }
+    # questions
+    let(:question) { create(:question, user: user) }
+    # answers
+    let(:answer) { create(:answer, question: question, user: other) }
+    let(:answer2) { create(:answer, question: question, user: user) }
 
     it { should_not be_able_to :manage, :all }
     it { should be_able_to :read, :all }
@@ -30,19 +36,22 @@ RSpec.describe Ability, type: :model do
     it { should be_able_to :create, Answer }
     it { should be_able_to :create, Comment }
 
-    it { should be_able_to :set_best, Answer }
-
+    # Question
     it { should be_able_to :update, create(:question, user: user), user: user }
     it { should_not be_able_to :update, create(:question, user: other), user: user }
-
-    it { should be_able_to :update, create(:answer, user: user), user: user }
-    it { should_not be_able_to :update, create(:answer, user: other), user: user }
 
     it { should be_able_to :destroy, create(:question, user: user), user: user }
     it { should_not be_able_to :destroy, create(:question, user: other), user: user }
 
+    #Answer
+    it { should be_able_to :update, create(:answer, user: user), user: user }
+    it { should_not be_able_to :update, create(:answer, user: other), user: user }
+
     it { should be_able_to :destroy, create(:answer, user: user), user: user }
     it { should_not be_able_to :destroy, create(:answer, user: other), user: user }
 
+    #Best Answer
+    it { should be_able_to :set_best, answer }
+    it { should_not be_able_to :set_best, answer2 }
   end
 end

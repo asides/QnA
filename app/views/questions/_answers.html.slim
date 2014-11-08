@@ -10,9 +10,8 @@ hr
         - if answer.best
           span
             i.glyphicon.glyphicon-ok-circle.best-answer
-          = link_to 'Unbest answer', set_best_answer_path(answer), class: 'set-best-answer', data: { answer_id: answer.id }, remote: true, method: :post
-        - else
-          = link_to 'It\'s best answer!', set_best_answer_path(answer), class: 'btn btn-default set-best-answer', data: { answer_id: answer.id }, remote: true, method: :post
+        - if can?(:set_best, answer)
+          = link_to 'Best/Unbest answer', set_best_answer_path(answer), class: 'set-best-answer', data: { answer_id: answer.id }, remote: true, method: :post
       .panel-body
         p= answer.body
         ul

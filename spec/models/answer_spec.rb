@@ -32,7 +32,7 @@ RSpec.describe Answer, type: :model do
         expect(answer).to_not be_best
       end
 
-      it 'only one answer will be set as best' do
+      it 'only one answer in collection will be set as best' do
         answer.trigger_best!
         answer2.trigger_best!
 
