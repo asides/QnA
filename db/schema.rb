@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 20141109095948) do
     t.datetime "updated_at"
   end
 
-  add_index "taggings", ["tag_id", "question_id"], name: "index_taggings_on_tag_id_and_question_id"
+  add_index "taggings", ["tag_id", "question_id"], name: "index_taggings_on_tag_id_and_question_id", unique: true
 
   create_table "tags", force: true do |t|
     t.string   "name",       null: false
