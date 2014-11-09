@@ -11,10 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141102214508) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 20141109095948) do
 
   create_table "answers", force: true do |t|
     t.text     "body"
@@ -25,8 +22,8 @@ ActiveRecord::Schema.define(version: 20141102214508) do
     t.boolean  "best",        default: false
   end
 
-  add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
-  add_index "answers", ["user_id"], name: "index_answers_on_user_id", using: :btree
+  add_index "answers", ["question_id"], name: "index_answers_on_question_id"
+  add_index "answers", ["user_id"], name: "index_answers_on_user_id"
 
   create_table "attachments", force: true do |t|
     t.string   "file"
@@ -36,8 +33,8 @@ ActiveRecord::Schema.define(version: 20141102214508) do
     t.string   "attachmentable_type"
   end
 
-  add_index "attachments", ["attachmentable_id"], name: "index_attachments_on_attachmentable_id", using: :btree
-  add_index "attachments", ["attachmentable_type"], name: "index_attachments_on_attachmentable_type", using: :btree
+  add_index "attachments", ["attachmentable_id"], name: "index_attachments_on_attachmentable_id"
+  add_index "attachments", ["attachmentable_type"], name: "index_attachments_on_attachmentable_type"
 
   create_table "comments", force: true do |t|
     t.string   "body"
@@ -47,7 +44,7 @@ ActiveRecord::Schema.define(version: 20141102214508) do
     t.datetime "updated_at"
   end
 
-  add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type", using: :btree
+  add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type"
 
   create_table "questions", force: true do |t|
     t.string   "title"
@@ -55,6 +52,21 @@ ActiveRecord::Schema.define(version: 20141102214508) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+  end
+
+  create_table "taggings", force: true do |t|
+    t.integer  "tag_id"
+    t.integer  "question_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "taggings", ["tag_id", "question_id"], name: "index_taggings_on_tag_id_and_question_id"
+
+  create_table "tags", force: true do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|
@@ -74,7 +86,7 @@ ActiveRecord::Schema.define(version: 20141102214508) do
     t.boolean  "admin"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end
