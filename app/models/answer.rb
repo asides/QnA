@@ -14,7 +14,7 @@ class Answer < ActiveRecord::Base
   default_scope -> { order :created_at }
 
 
-  def trigger_best!
+  def toggle_best!
     best ? unset_best : set_best
   end
 

@@ -25,7 +25,7 @@ class AnswersController < ApplicationController
   end
 
   def set_best
-    respond_with @answer.trigger_best!
+    respond_with @answer.toggle_best!
   end
 
   private
