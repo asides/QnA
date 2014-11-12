@@ -94,6 +94,11 @@ RSpec.describe QuestionsController, type: :controller do
           expect { post :create, question: attributes_for(:question, user: user) }.to change(Question, :count).by(1)
         end
 
+        it 'create tag_list for question' do
+          post :create, question: attributes_for(:question, user: user, tag_list: 'a,b,c')
+          expect(assigns(:question).tag_list).to eq 'A,B,C'
+        end
+
         it 'redirects to show view' do
           post :create, question: attributes_for(:question, user: user)
           expect(response).to redirect_to question_path(assigns(:question))

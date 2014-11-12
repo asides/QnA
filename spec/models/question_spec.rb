@@ -17,4 +17,35 @@ RSpec.describe Question, type: :model do
 
   it { should have_many :taggings }
   it { should have_many :tags }
+
+  describe '#best_answer' do
+    let(:question) { create(:question) }
+    let!(:answers) { create_list(:answer, 2, question: question) }
+    let!(:best_answer) { create(:answer, question: question, best: true) }
+
+    it 'best_answer return best answer' do
+      expect(question.best_answer).to eq best_answer
+    end
+  end
+
+  describe '#tag_list' do
+    let(:tags) { create_list(:tag, 3 ) }
+    let(:question) { create(:question, tags: tags) }
+
+    it 'shoud have string with 3 tags' do
+      expect( question.tag_list ).to eq 'Tag-1,Tag-2,Tag-3'
+    end
+  end
+
+  describe '#tag_list=' do
+    let!(:tags) { create_list(:tag, 3 ) }
+    let!(:question) { create(:question, tags: tags) }
+
+    it 'should have new tags string with capitalize' do
+      question.tag_list='d,y'
+      question.reload
+
+      expect(question.tag_list).to eq 'D,Y'
+    end
+  end
 end

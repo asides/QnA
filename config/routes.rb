@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :tags
+
   root 'questions#index'
 
   # Example of regular route:

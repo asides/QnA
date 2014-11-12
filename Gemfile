@@ -26,14 +26,15 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 
 gem 'slim-rails'
 gem 'simple_form', '~> 3.1.0.rc1', github: 'plataformatec/simple_form'
-
+gem 'typeahead-rails'
+gem 'bootstrap-tagsinput-rails'
 gem 'bootstrap-sass', '~> 3.2.0'
 # gem 'less-rails'
 # gem 'twitter-bootstrap-rails'
 # gem 'twitter-bootswatch-rails', '~> 3.2.0'
 # gem 'twitter-bootswatch-rails-helpers'
 
-gem 'autoprefixer-rails'
+# gem 'autoprefixer-rails'
 gem 'devise'
 gem 'rails-i18n'
 gem 'devise-i18n'
@@ -45,6 +46,7 @@ gem 'thin'
 gem 'cancancan'
 
 group :development do
+  gem 'the_log'
   gem 'spring'
   gem 'better_errors'
   gem 'binding_of_caller'

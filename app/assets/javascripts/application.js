@@ -11,8 +11,12 @@
 // about supported directives.
 //
 //= require jquery
+//= require the_log
 //= require jquery_ujs
 //= require jquery.remotipart
+//= require bootstrap-sprockets
+//= require typeahead.min
+//= require bootstrap-tagsinput
 // require private_pub
 // require turbolinks
 //= require_tree .
