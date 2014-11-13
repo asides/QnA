@@ -16,11 +16,11 @@ feature 'Добавление тегов к вопросу', %q{
   end
 
   scenario 'Пользователь добавляет теги когда создаёт вопрос' do
-    fill_in 'Tags', with: 'tag_a,tab_b,tag_c'
+    fill_in 'Tag list', with: 'tag_a,tab_b,tag_c'
 
     click_on 'Сохранить вопрос'
 
-    expect(page).to have_content( 'tag_a tag_b tag_c' )
+    expect(page).to have_content( 'Tag a,Tab b,Tag c' )
   end
 
 end
