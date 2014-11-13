@@ -12,5 +12,9 @@ hr
           footer.user-info
             | Ask create -
             i =question.user.name
+            - unless question.tags.empty?
+              p.tags
+                ' Tags:
+                = question.tag_list
 - else
   p Еще не создан ни один вопрос

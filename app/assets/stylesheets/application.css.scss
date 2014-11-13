@@ -1,5 +1,5 @@
 /*
-*= require typeahead-rails
+
 *= require bootstrap-tagsinput
 *= require_tree .
 *= require_self
@@ -11,3 +11,4 @@ body {
   padding-top: 60px;
 }
 .new_comment form { display: none; }
+.bootstrap-tagsinput { display: block;}

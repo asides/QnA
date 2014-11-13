@@ -11,7 +11,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :tags
+  resources :tags do
+    get :autocomplete, on: :collection
+  end
 
   root 'questions#index'
 

@@ -1,7 +1,7 @@
 = simple_form_for @question do |f|
   = f.input :title
   = f.input :body
-  = f.input :tag_list, label: "Tags"
+  = f.input :tag_list
   = f.simple_fields_for :attachments, @question.attachments.build do |a|
     = a.input :file, as: :file, wrapper: :vertical_file_input
 

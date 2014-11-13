@@ -15,7 +15,7 @@
 //= require jquery_ujs
 //= require jquery.remotipart
 //= require bootstrap-sprockets
-//= require typeahead.min
+//= require twitter/typeahead.min
 //= require bootstrap-tagsinput
 // require private_pub
 // require turbolinks
