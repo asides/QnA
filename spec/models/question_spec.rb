@@ -29,11 +29,12 @@ RSpec.describe Question, type: :model do
   end
 
   describe '#tag_list' do
+
     let(:tags) { create_list(:tag, 3 ) }
     let(:question) { create(:question, tags: tags) }
 
     it 'shoud have string with 3 tags' do
-      expect( question.tag_list ).to eq 'Tag-1,Tag-2,Tag-3'
+      expect( question.tag_list ).to match(/Tag-\d+,Tag-\d+,Tag-\d+/)
     end
   end
 
