@@ -6,13 +6,14 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-User.destroy_all
-Question.destroy_all
-Comment.destroy_all
-Answer.destroy_all
+# User.destroy_all
+# Question.destroy_all
+# Comment.destroy_all
+# Answer.destroy_all
 
 users = FactoryGirl.create_list(:user, 3)
-users[0].update(admin: true)
+tags = FactoryGirl.create_list(:tag, 5)
+users[0].update(admin: true, name: 'Admin')
 
 
 3.times { |i| Question.create!(title: LoremIpsum.short, body: LoremIpsum.medium("<br />"), user: users[i]) }

@@ -95,8 +95,8 @@ RSpec.describe QuestionsController, type: :controller do
         end
 
         it 'create tag_list for question' do
-          post :create, question: attributes_for(:question, user: user, tag_list: 'a,b,c')
-          expect(assigns(:question).tag_list).to eq 'A,B,C'
+          post :create, question: attributes_for(:question, user: user, tag_list: 'A, b  ,C 1, d  2   ')
+          expect(assigns(:question).tag_list).to eq 'a,b,c 1,d  2'
         end
 
         it 'redirects to show view' do
@@ -135,10 +135,11 @@ RSpec.describe QuestionsController, type: :controller do
           end
 
           it 'changes question attributes' do
-            patch :update, id: question, question: { title: 'new title', body: 'new body' }
+            patch :update, id: question, question: { title: 'new title', body: 'new body', tag_list: 'A, b  ,C 1, d  2   ' }
             question.reload
             expect(question.title).to eq 'new title'
             expect(question.body).to eq 'new body'
+            expect(question.tag_list).to eq 'a,b,c 1,d  2'
           end
 
           it 'redirects to the updated question' do

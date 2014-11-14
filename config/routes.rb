@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :answers, concerns: :commentable do
       post :set_best, on: :member
     end
+    get "tagged/:tag" => "questions#tagged", as: :tagged, on: :collection
   end
 
   resources :tags do

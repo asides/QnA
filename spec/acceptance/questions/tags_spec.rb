@@ -6,21 +6,35 @@ feature 'Добавление тегов к вопросу', %q{
   Могу добавить теги к своему вопросу
 } do
 
-  given(:user) { create(:user) }
-
-  background do
-    sign_in(user)
-    visit new_question_path
-    fill_in 'Title', with: 'Test tags for question'
-    fill_in 'Body', with: 'It is simple test of tags for best navigation'
-  end
+  given!(:user) { create(:user) }
+  given!(:question) { create(:question, user: user, tag_list: 'a,b,c') }
 
   scenario 'Пользователь добавляет теги когда создаёт вопрос' do
-    fill_in 'Tag list', with: 'tag_a,tab_b,tag_c'
+    sign_in(user)
+    visit new_question_path
+
+    fill_in 'Title', with: 'Test tags for question'
+    fill_in 'Body', with: 'It is simple test of tags for best navigation'
+
+    fill_in 'Tag list', with: 'tag_1,tag_2,tag_3'
 
     click_on 'Сохранить вопрос'
 
-    expect(page).to have_content( 'Tag a,Tab b,Tag c' )
+    within('.question .tags') do
+      expect(page).to have_content( /tag_\d/, count: 3 )
+    end
   end
 
+  scenario 'Пользователь изменяет теги когда редактирует вопрос' do
+    sign_in(user)
+    visit edit_question_path question
+
+    fill_in 'Tag list', with: 'tag_a'
+
+    click_on 'Сохранить вопрос'
+
+    within('.question .tags') do
+      expect(page).to have_content('tag_a')
+    end
+  end
 end

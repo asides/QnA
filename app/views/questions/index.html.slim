@@ -12,9 +12,6 @@ hr
           footer.user-info
             | Ask create -
             i =question.user.name
-            - unless question.tags.empty?
-              p.tags
-                ' Tags:
-                = question.tag_list
+            = render partial: 'tag_list', locals: { tag_list: question }
 - else
   p Еще не создан ни один вопрос

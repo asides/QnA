@@ -1,0 +1,10 @@
+- unless tag_list.tags.empty?
+  p.tags
+    ' Tags:
+    - tag_list.tags.each do |tag|
+      a.label.label-info href="#{tagged_questions_path(tag.name)}"
+        =tag.name
+        '
+        span.badge
+          =tag.questions_count
+      '

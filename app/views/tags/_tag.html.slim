@@ -1,1 +1,4 @@
-li= tag.name
+li.list-group-item
+  = link_to tag.name, "/questions/tagged/#{tag.name}"
+  span.badge
+    = tag.questions_count

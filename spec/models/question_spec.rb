@@ -34,19 +34,18 @@ RSpec.describe Question, type: :model do
     let(:question) { create(:question, tags: tags) }
 
     it 'shoud have string with 3 tags' do
-      expect( question.tag_list ).to match(/Tag-\d+,Tag-\d+,Tag-\d+/)
+      expect( question.tag_list ).to match(/tag\d+,tag\d+,tag\d+/)
     end
   end
 
   describe '#tag_list=' do
-    let!(:tags) { create_list(:tag, 3 ) }
-    let!(:question) { create(:question, tags: tags) }
+    let!(:question) { create(:question) }
 
-    it 'should have new tags string with capitalize' do
-      question.tag_list='d,y'
+    it 'should have new tags string with strip and lowercase' do
+      question.tag_list='a,B ,  c, d   ,e '
       question.reload
 
-      expect(question.tag_list).to eq 'D,Y'
+      expect(question.tag_list).to eq 'a,b,c,d,e'
     end
   end
 end

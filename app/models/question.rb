@@ -16,17 +16,19 @@ class Question < ActiveRecord::Base
 
   default_scope -> { order created_at: :desc }
 
+  scope :tagged, ->(tag) { unscoped.joins(:tags).where("tags.name = ?", tag) }
+
   def best_answer
     answers.where(best: true).first
   end
 
   def tag_list
-    tags.map { |tag| tag.name.mb_chars.capitalize.tr('_', ' ') }.join(",")
+    tags.map { |tag| tag.name }.join(",")
   end
 
   def tag_list=(list)
     list ||= ''
-    names = list.split(',').map { |n| n.mb_chars.strip.downcase.tr(' ', '_') }.uniq
+    names = list.split(',').map { |n| n.mb_chars.strip.downcase }.uniq
     self.tags = names.map { |name| new_tag = Tag.find_or_create_by(name: name) }
   end
 end

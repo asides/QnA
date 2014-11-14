@@ -34,6 +34,11 @@ class QuestionsController < ApplicationController
     respond_with @question.destroy
   end
 
+   def tagged
+    @questions = Question.tagged(params[:tag])
+    render :index
+  end
+
   private
 
   def load_question
