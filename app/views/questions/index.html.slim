@@ -5,7 +5,10 @@ hr
     - @questions.each do |question|
       div.media id="question_summary_#{question.id}"
         .col-md-1.well.well-sm.statscontainer
-          p.text-center stats
+          p.text-center
+            h5 Voted: "#{question.total_voted}"
+            - if question.best_answer
+              h5 Best Answer
         .col-md-11.summary
           h4= link_to question.title, question_url(question)
           p.excerpt= truncate(question.body, length: 90)

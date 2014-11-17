@@ -2,11 +2,13 @@ class Vote < ActiveRecord::Base
   belongs_to :user
   belongs_to :votable, polymorphic: true
 
-  def up
-    self.score += 1
+  validates :score, presence: true
+
+  def vote_up!
+    update(score: self.score+=1) if self.score < 1
   end
 
-  def down
-    self.score -= 1
+  def vote_down!
+    update(score: self.score-=1) if self.score > -1
   end
 end

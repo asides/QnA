@@ -1,0 +1,8 @@
+<% if @vote.errors.present? %>
+  <% @vote.errors.full_messages.each do |message| %>
+    $('#flash_message').html('<%= j message %>');
+  <% end %>
+<% else %>
+  $('.total_voted').html( '<%= @parent.total_voted %>');
+<% end %>
+

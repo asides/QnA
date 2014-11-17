@@ -21,13 +21,16 @@ RSpec.describe Ability, type: :model do
 
   describe 'for user' do
     # users
-    let(:user) { create(:user) }
-    let(:other) { create(:user) }
+    let!(:user) { create(:user) }
+    let!(:other) { create(:user) }
     # questions
-    let(:question) { create(:question, user: user) }
+    let!(:question) { create(:question, user: user) }
     # answers
     let(:answer) { create(:answer, question: question, user: other) }
     let(:answer2) { create(:answer, question: question, user: user) }
+
+    let(:vote) { create(:vote, user: user, votable: question) }
+
 
     it { should_not be_able_to :manage, :all }
     it { should be_able_to :read, :all }
@@ -53,5 +56,8 @@ RSpec.describe Ability, type: :model do
     #Best Answer
     it { should be_able_to :set_best, answer }
     it { should_not be_able_to :set_best, answer2 }
+
+    #Votes
+    it { should be_able_to :up, vote}
   end
 end

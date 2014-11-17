@@ -1,4 +1,8 @@
-
+.total_voted
+  = @question.total_voted
+p
+  = link_to 'Up', up_question_path(@question), method: :patch, remote: true
+  = link_to 'Down', down_question_path(@question), method: :patch, remote: true
 
 .well.question
   h2= @question.title

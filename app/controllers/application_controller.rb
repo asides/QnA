@@ -22,4 +22,9 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) << :name
   end
+
+   def find_parent
+    resource, id = request.path.split("/")[1, 2]
+    @parent = resource.singularize.classify.constantize.find(id)
+  end
 end

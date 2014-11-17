@@ -32,4 +32,9 @@ class Question < ActiveRecord::Base
     names = list.split(',').map { |n| n.mb_chars.strip.downcase }.uniq
     self.tags = names.map { |name| new_tag = Tag.find_or_create_by(name: name) }
   end
+
+  def total_voted
+    total = self.votes.sum :score
+    total ||= 0
+  end
 end

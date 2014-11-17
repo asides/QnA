@@ -23,6 +23,11 @@ class Ability
 
   def user_abilities
     guest_abilities
+
+    can [:up,:down], Vote do |vote|
+      vote.votable.user != @user
+    end
+
     can :create, [Question, Answer, Comment]
     can :update, [Question, Answer], user: user
     can :destroy, [Question, Answer], user: user
