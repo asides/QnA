@@ -10,10 +10,12 @@ feature 'Голосование за вопрос', %q{
   given!(:other_author) { create(:user) }
   given!(:question) { create(:question, user: user) }
 
-  scenario 'Пользователь позитивно голосует за вопрос', js: true do
-    sign_in(user)
-    visit question_path question
+  background do |example|
+    sign_in(other_author) unless example.metadata[:skip_sign_in]
+    visit question_path(question)
+  end
 
+  scenario 'Пользователь позитивно голосует за вопрос', js: true do
     within('.total_voted') do
       expect(page).to have_content( '0' )
     end

@@ -29,7 +29,7 @@ RSpec.describe Ability, type: :model do
     let(:answer) { create(:answer, question: question, user: other) }
     let(:answer2) { create(:answer, question: question, user: user) }
 
-    let(:vote) { create(:vote, user: user, votable: question) }
+    let!(:vote) { create(:vote, user: other, votable: question) }
 
 
     it { should_not be_able_to :manage, :all }
@@ -58,6 +58,7 @@ RSpec.describe Ability, type: :model do
     it { should_not be_able_to :set_best, answer2 }
 
     #Votes
-    it { should be_able_to :up, vote}
+    it { should be_able_to :up, vote, user: other}
+    it { should be_able_to :down, vote}
   end
 end

@@ -26,6 +26,15 @@ Rails.application.routes.draw do
     get :autocomplete, on: :collection
   end
 
+  namespace :api do
+    namespace :v1 do
+      resource :profiles do
+        get :me, on: :collection
+      end
+      resources :questions
+    end
+  end
+
   root 'questions#index'
 
   # Example of regular route:

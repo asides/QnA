@@ -15,8 +15,6 @@ class Question < ActiveRecord::Base
 
   accepts_nested_attributes_for :attachments
 
-  default_scope -> { order created_at: :desc }
-
   scope :tagged, ->(tag) { unscoped.joins(:tags).where("tags.name = ?", tag) }
 
   def best_answer
