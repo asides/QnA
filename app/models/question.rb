@@ -17,6 +17,8 @@ class Question < ActiveRecord::Base
 
   scope :tagged, ->(tag) { unscoped.joins(:tags).where("tags.name = ?", tag) }
 
+  after_create :calculate_reputation
+
   def best_answer
     answers.where(best: true).first
   end
@@ -34,5 +36,11 @@ class Question < ActiveRecord::Base
   def total_voted
     total = self.votes.sum :score
     total ||= 0
+  end
+
+  private
+
+  def calculate_reputation
+    Reputation.calculate(self)
   end
 end

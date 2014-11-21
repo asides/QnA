@@ -58,7 +58,7 @@ RSpec.describe Ability, type: :model do
     it { should_not be_able_to :set_best, answer2 }
 
     #Votes
-    it { should be_able_to :up, vote, user: other}
-    it { should be_able_to :down, vote}
+    it { should be_able_to :up, Vote}
+    it { should be_able_to :down, Vote}
   end
 end

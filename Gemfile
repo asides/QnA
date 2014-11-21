@@ -41,6 +41,9 @@ gem 'responders'
 gem 'private_pub'
 gem 'thin'
 gem 'cancancan'
+gem 'active_model_serializers'
+gem 'oj'
+gem 'oj_mimic_json'
 
 group :development do
   gem 'the_log'

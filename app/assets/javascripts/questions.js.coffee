@@ -11,9 +11,9 @@ $ ->
         $.map list, (name) ->
           name: name
   )
-  
+
   tags.initialize()
-  
+
   $("#question_tag_list").tagsinput
     typeaheadjs:
       name: "tags"
