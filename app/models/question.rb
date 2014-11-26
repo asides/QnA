@@ -41,6 +41,7 @@ class Question < ActiveRecord::Base
   private
 
   def calculate_reputation
-    Reputation.calculate(self)
+    reputation = Reputation.calculate(self)
+    self.user.update(reputation: reputation)
   end
 end

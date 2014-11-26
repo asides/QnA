@@ -17,6 +17,9 @@
 //= require bootstrap-sprockets
 //= require twitter/typeahead.min
 //= require bootstrap-tagsinput
+//= require handlebars.runtime
+//= require handlebars
 // require private_pub
 // require turbolinks
+//= require_tree ./templates
 //= require_tree .

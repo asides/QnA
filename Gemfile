@@ -20,6 +20,7 @@ gem 'bootstrap-tagsinput-rails'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'searchkick'
 gem 'doorkeeper'
+gem 'handlebars_assets'
 # gem 'less-rails'
 # gem 'twitter-bootstrap-rails'
 # gem 'twitter-bootswatch-rails', '~> 3.2.0'
@@ -54,6 +55,7 @@ group :development do
   gem 'pry-rails'
   gem 'rubocop', require: false
   gem 'rubocop-rspec'
+  gem 'stack_rescue'
 end
 
 group :test, :development do
