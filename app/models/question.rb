@@ -33,11 +33,6 @@ class Question < ActiveRecord::Base
     self.tags = names.map { |name| new_tag = Tag.find_or_create_by(name: name) }
   end
 
-  def total_voted
-    total = self.votes.sum :score
-    total ||= 0
-  end
-
   private
 
   def calculate_reputation
