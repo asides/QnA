@@ -7,7 +7,7 @@ RSpec.describe Vote, :type => :model do
   it { should belong_to :user }
   it { should belong_to :votable }
 
-  let!(:vote) { create(:vote, votable: question) }
+  let!(:vote) { create(:vote, votable: create(:question)) }
 
   it 'new vote score always 0' do
     expect(vote.score).to eq 0
@@ -52,7 +52,7 @@ RSpec.describe Vote, :type => :model do
 
     it "sends increment_parent_counter" do
       expect(vote).to receive(:update_parent_total_voted)
-      vote.save
+      vote.save!
     end
     it 'update votable total_voted' do
       expect{question.votes.create(score: 1, user_id: user.id)}.to change{question.reload.total_voted}
