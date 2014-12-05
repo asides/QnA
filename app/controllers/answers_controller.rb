@@ -5,10 +5,8 @@ class AnswersController < ApplicationController
   before_action :load_question, only: [:new, :create]
   before_action :load_answer, only: [:update, :destroy, :set_best]
 
-  # after_action :publish_answer, only: :create
-
   respond_to :js
-  # respond_to :json, only: [:create, :destroy]
+
   authorize_resource
 
   def create
@@ -39,9 +37,9 @@ class AnswersController < ApplicationController
     @question = @answer.question
   end
 
-  def publish_answer
-    PrivatePub.publish_to("/questions/#{@question.id}/answers", answer: @answer.to_json) if @answer.valid?
-  end
+  # def publish_answer
+  #   PrivatePub.publish_to("/questions/#{@question.id}/answers", answer: @answer.to_json) if @answer.valid?
+  # end
 
   def answer_params
     params.require(:answer).permit(:body, attachments_attributes: [:file])

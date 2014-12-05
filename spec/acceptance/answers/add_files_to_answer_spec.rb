@@ -15,11 +15,13 @@ feature 'Добавление файлов к ответу', %q{
   end
 
   scenario 'Пользователь добавляет файлы к ответу', js: true do
-    fill_in 'Ваш ответ', with: 'text text'
-    attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
-    click_on 'Ответить на вопрос'
+    within 'form#new_answer' do
+      fill_in 'Ваш ответ', with: 'text text'
+      attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
+      click_on 'Ответить на вопрос'
+    end
 
-    within '.answers' do
+    within '#answers' do
       expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
     end
   end

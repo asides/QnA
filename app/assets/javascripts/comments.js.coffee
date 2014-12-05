@@ -3,4 +3,4 @@ $ ->
     e.preventDefault();
     $(this).hide();
     parent_id = $(this).data('parentId')
-    $('form#new-comment-to-' + parent_id).show()
+    $('#new-comment-to-' + parent_id).show()

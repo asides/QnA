@@ -13,7 +13,7 @@ feature 'Автор ответа может удалять свои ответы
 
     click_link 'Удалить', href: "#{answer_path(answer)}"
 
-    within('.answers') do
+    within("#answers") do
       expect(page).to_not have_content(answer.body)
     end
   end
@@ -21,14 +21,14 @@ feature 'Автор ответа может удалять свои ответы
   scenario 'Аутентифицированный пользователь не может удалить чужой ответ' do
     sign_in other
     visit question_path(question)
-    within('.answers') do
+    within('#answers') do
       expect(page).to_not have_link('Удалить', href: "#{answer_path(answer)}")
     end
   end
 
   scenario 'Гость не может удалять ответы' do
     visit question_path(question)
-    within('.answers') do
+    within('#answers') do
       expect(page).to_not have_link('Удалить', href: "#{answer_path(answer)}")
     end
   end

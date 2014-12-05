@@ -1,10 +1,4 @@
-h3 Ответы.
-hr
-- if @question.answers.blank?
-  p
-   i Еще никто не отвечал. Будьте первым!
-- @question.answers.each do |answer|
-  - if answer.persisted?
+- if answer.persisted?
     .panel.panel-default.answer id="answer-#{answer.id}"
       .panel-heading
         - if answer.best
@@ -17,6 +11,10 @@ hr
         ul
           - answer.attachments.each do |a|
             li= link_to a.file.identifier, a.file.url
+        .answer_comments.comments
+          = render 'comments/list', parent: answer
+        .new_answer_comment
+          = render 'comments/form', parent: answer
       .panel-footer
           p
             ' Answered:
@@ -31,10 +29,3 @@ hr
             = simple_form_for answer, remote: true, html: {id: "edit-answer-#{answer.id}"} do |f|
               = f.input :body, label: 'Edit you answer'
               = f.button :submit, 'Save answer'
-/ .comments
-/   = # render 'comments/list', parent: answer
-hr
-- if can?(:create, Answer)
-  = render partial: 'answers/form', locals: { question: @question, answer: @answer }
-- else
-  =render 'shared/try_sign_in'

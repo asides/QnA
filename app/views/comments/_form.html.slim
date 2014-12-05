@@ -1,0 +1,13 @@
+= link_to 'Add new comment', '#', class: 'add-comment-link', data: { parent_id: "#{parent.class.name.downcase}-#{parent.id}" }
+.new_comment_form id="new-comment-to-#{parent.class.to_s.downcase}-#{parent.id}"
+  - if user_signed_in?
+    #comment_errors
+    = simple_form_for [parent, parent.comments.build], remote: true do |f|
+      = f.input :body, as: :text, label: 'New comment'
+      = f.button :submit, 'Send comment', class: 'btn-sm'
+  - else
+    .loginbox
+      ' Для отправки комментария Вы должны сперва
+      = link_to "войти", new_user_session_path
+      '  или
+      = link_to "зарегистрироваться", new_user_registration_path

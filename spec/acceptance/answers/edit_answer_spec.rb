@@ -13,7 +13,7 @@ feature 'Автор ответа может редактировать свои 
   scenario 'Гость не может редактировать ответы' do
     visit question_path(question)
 
-    within '.answers' do
+    within '#answers' do
       expect(page).to_not have_link 'Редактировать'
     end
   end
@@ -25,13 +25,13 @@ feature 'Автор ответа может редактировать свои 
     end
 
     scenario 'видит ссылку на редактирование ответа' do
-      within '.answers' do
+      within '#answers' do
         expect(page).to have_link 'Редактировать'
       end
     end
 
     scenario 'редактирует свой ответ', js: true do
-      within '.answers' do
+      within "#answers #answer-#{answer.id}" do
         click_on 'Редактировать'
         fill_in 'Edit you answer', with: 'edited answer', match: :first
         click_on 'Save answer'
@@ -42,7 +42,7 @@ feature 'Автор ответа может редактировать свои 
 
     scenario 'не может редактировать чужой ответ' do
       visit question_path(question2)
-      within '.answers' do
+      within '#answers' do
         expect(page).to_not have_link 'Редактировать'
       end
     end
