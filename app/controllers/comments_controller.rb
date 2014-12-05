@@ -8,7 +8,8 @@ class CommentsController < ApplicationController
   authorize_resource
 
   def create
-    respond_with(@comment = @parent.comments.create(comment_params))
+    @comment = @parent.comments.create(comment_params.merge({ user: current_user }))
+    respond_with @comment
   end
 
   def update
