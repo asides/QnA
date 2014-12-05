@@ -29,7 +29,7 @@ class Ability
     end
 
     can :create, [Question, Answer, Comment]
-    can :update, [Question, Answer], user: user
+    can :update, [Question, Answer, Comment], user: user
     can :destroy, [Question, Answer], user: user
     can :set_best, Answer do |answer|
       answer.question.user == @user && answer.question.user != answer.user

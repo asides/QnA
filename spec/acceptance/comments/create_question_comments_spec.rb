@@ -16,7 +16,7 @@ feature 'Добавление комментариев к вопросу', %q{
 
   describe 'Пользователь пытается добавить комментарий' do
     background do
-      within '.new_question_comment' do
+      within "#question-#{question.id}" do
         click_on 'Add new comment'
       end
     end
@@ -37,10 +37,10 @@ feature 'Добавление комментариев к вопросу', %q{
           click_on 'Send comment'
         end
         expect(current_path).to eq question_path(question)
-        within '#question .comments' do
+        within "#question-#{question.id} .comments" do
           expect(page).to have_content 'New comment for question'
         end
-        within '#question' do
+        within "#question-#{question.id}" do
           expect(page).to_not have_selector('form#new_comment')
         end
       end
@@ -51,7 +51,7 @@ feature 'Добавление комментариев к вопросу', %q{
           click_on 'Send comment'
         end
 
-        within '#question' do
+        within "#question-#{question.id}" do
           expect(page).to have_selector('form#new_comment')
           expect(page).to have_content('не может быть пустым')
         end

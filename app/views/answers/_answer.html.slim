@@ -26,6 +26,7 @@
             = link_to 'Удалить', answer_path(answer), class: 'btn btn-sm btn-danger', method: :delete, remote: true
 
           .edit_answer
+            .errors
             = simple_form_for answer, remote: true, html: {id: "edit-answer-#{answer.id}"} do |f|
               = f.input :body, label: 'Edit you answer'
               = f.button :submit, 'Save answer'

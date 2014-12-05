@@ -1,2 +1,11 @@
-p.well.well-sm.bg-success
+.bg-success id="comment-#{comment.id}"
   = comment.body
+  - if can?(:update, comment)
+    p
+      = link_to 'Редактировать', '#', class: 'edit-comment-link', data: { comment_id: comment.id }
+
+    .edit_comment
+      .errors
+      = simple_form_for comment, remote: true, html: {id: "edit-comment-#{comment.id}"} do |f|
+        = f.input :body, as: :text, label: 'Edit you comment'
+        = f.button :submit, 'Save comment'

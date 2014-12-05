@@ -1,4 +1,4 @@
-var parentSelector = '<%= @parent.is_a?(Question) ? "#question" : "#answer-#{@parent.id}" %>';
+var parentSelector = '<%= @parent.is_a?(Question) ? "#question-#{@parent.id}" : "#answer-#{@parent.id}" %>';
 <% if @comment.errors.present? %>
   <% @comment.errors.full_messages.each do |message| %>
     $(parentSelector + ' #comment_errors').html('<%= j message %>');

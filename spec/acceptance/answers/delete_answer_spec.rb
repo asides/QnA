@@ -1,21 +1,22 @@
 require_relative '../acceptance_helper'
 
 feature 'Автор ответа может удалять свои ответы' do
-  given(:user) { create(:user) }
+  given!(:user) { create(:user) }
   given(:other) { create(:user) }
 
-  given!(:question) { create(:question, user: other) }
+  given(:question) { create(:question) }
   given!(:answer) { create(:answer, question: question, user: user) }
+
+
 
   scenario 'Автор ответа удаляет свой ответ', js: true do
     sign_in user
     visit question_path(question)
 
-    click_link 'Удалить', href: "#{answer_path(answer)}"
-
-    within("#answers") do
-      expect(page).to_not have_content(answer.body)
+    within("#answer-#{answer.id}") do
+      click_on 'Удалить'
     end
+      expect(page).to_not have_content(answer.body)
   end
 
   scenario 'Аутентифицированный пользователь не может удалить чужой ответ' do

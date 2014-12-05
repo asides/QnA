@@ -1,0 +1,8 @@
+<% if @comment.errors.present? %>
+  <% @comment.errors.full_messages.each do |message| %>
+    $("#comment-<%= @comment.id %> .errors").html('<%= j message %>');
+  <% end %>
+<% else %>
+  <% parent_id = @comment.commentable.class.to_s.downcase + '-' + @comment.commentable.id.to_s %>
+  $('#<%= parent_id %> .comments').html( '<%= j render "comments/list", parent: @comment.commentable %>' );
+<% end %>
