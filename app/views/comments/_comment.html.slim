@@ -3,6 +3,8 @@
   - if can?(:update, comment)
     p
       = link_to 'Редактировать', '#', class: 'edit-comment-link', data: { comment_id: comment.id }
+      '  |
+      = link_to 'Удалить', comment_path(comment), method: :delete, remote: true
 
     .edit_comment
       .errors

@@ -17,6 +17,10 @@ class CommentsController < ApplicationController
     respond_with @comment
   end
 
+  def destroy
+    respond_with(@comment.destroy)
+  end
+
   private
 
   def load_comment
