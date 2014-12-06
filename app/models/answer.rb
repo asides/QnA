@@ -2,8 +2,8 @@ class Answer < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :question
-  has_many :attachments, as: :attachmentable
-  has_many :comments, as: :commentable
+  has_many :attachments, as: :attachmentable, dependent: :destroy
+  has_many :comments, as: :commentable, dependent: :destroy
 
 
   validates :body, length: { maximum: 1000 }, presence: true

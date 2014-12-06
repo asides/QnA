@@ -28,6 +28,9 @@ RSpec.describe Ability, type: :model do
     # answers
     let(:answer) { create(:answer, question: question, user: other) }
     let(:answer2) { create(:answer, question: question, user: user) }
+    # # comments for question
+    # let(:comment) { create(:comment, commentable: question, user: other) }
+    # let(:comment2) { create(:comment, commentable: question, user: user) }
 
     let!(:vote) { create(:vote, user: other, votable: question) }
 
@@ -60,5 +63,12 @@ RSpec.describe Ability, type: :model do
     #Votes
     it { should be_able_to :up, Vote}
     it { should be_able_to :down, Vote}
+
+    #Comment
+    it { should be_able_to :update, create(:comment, user: user), user: user }
+    it { should_not be_able_to :update, create(:comment, user: other), user: user }
+
+    it { should be_able_to :destroy, create(:comment, user: user), user: user }
+    it { should_not be_able_to :destroy, create(:comment, user: other), user: user }
   end
 end

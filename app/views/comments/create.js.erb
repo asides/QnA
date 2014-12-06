@@ -1,2 +1,12 @@
-var parentSelector = '<%= @parent.is_a?(Question) ? ".question" : "#answer-#{@parent.id}" %>';
-$(parentSelector + ' .comments').html('<%= j render "list", parent: @parent %>');
+var parentSelector = '<%= @parent.is_a?(Question) ? "#question-#{@parent.id}" : "#answer-#{@parent.id}" %>';
+<% if @comment.errors.present? %>
+  <% @comment.errors.full_messages.each do |message| %>
+    $(parentSelector + ' #comment_errors').html('<%= j message %>');
+  <% end %>
+<% else %>
+  $(parentSelector + ' .comments').html('<%= j render "list", parent: @parent %>');
+  $(parentSelector + ' .add-comment-link').show()
+  $(parentSelector + ' .new_comment_form textarea').val('')
+  $(parentSelector + ' .new_comment_form').hide()
+<% end %>
+

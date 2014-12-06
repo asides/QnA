@@ -1,5 +1,5 @@
 #answer-errors
-= simple_form_for [@question, answer=@question.answers.build], remote: true do |f|
+= simple_form_for [question, answer=question.answers.build], remote: true do |f|
   = f.input :body, label: 'Ваш ответ'
   = f.simple_fields_for :attachments, answer.attachments.build do |a|
     = a.input :file, as: :file, wrapper: :vertical_file_input

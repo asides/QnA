@@ -1,0 +1,7 @@
+h3 Ответы.
+hr
+- if question.answers.blank?
+  p
+   i Еще никто не отвечал. Будьте первым!
+- else
+  = render question.answers

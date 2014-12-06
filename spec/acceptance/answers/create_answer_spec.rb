@@ -11,7 +11,7 @@ feature 'Аутентифицированный пользователь мож�
     click_on 'Ответить на вопрос'
 
     expect(current_path).to eq question_path(question)
-    within '.answers' do
+    within '#answers' do
       expect(page).to have_content 'My answer'
     end
   end

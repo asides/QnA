@@ -1,20 +1,30 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_parent
+  before_action :find_parent, only: :create
+  before_action :load_comment, only: [:update, :destroy]
 
   respond_to :js
 
   authorize_resource
 
   def create
-    respond_with(@comment = @parent.comments.create(comment_params))
+    @comment = @parent.comments.create(comment_params.merge({ user: current_user }))
+    respond_with @comment
+  end
+
+  def update
+    @comment.update(comment_params)
+    respond_with @comment
+  end
+
+  def destroy
+    respond_with(@comment.destroy)
   end
 
   private
 
-  def load_parent
-    @parent = Question.find(params[:question_id]) if params[:question_id]
-    @parent ||= Answer.find(params[:answer_id])
+  def load_comment
+    @comment = Comment.find(params[:id])
   end
 
   def comment_params

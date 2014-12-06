@@ -6,7 +6,7 @@ feature 'Посетитель может просматривать список
     questions = create_list(:question, 3)
     expect(Question.all).to_not be_empty
     visit root_path
-    expect(page).to have_content('MyString', count: 3)
+    expect(page).to have_content('Question title', count: 3)
   end
 
   scenario 'Посетитель видит сообщение если вопросов в базе нет' do

@@ -1,31 +1,37 @@
-.total_voted
-  = @question.total_voted
-p
-  = link_to 'Up', up_question_path(@question), method: :patch, remote: true
-  = link_to 'Down', down_question_path(@question), method: :patch, remote: true
+div id="question-#{@question.id}"
+  .total_voted
+    = @question.total_voted
+  p
+    = link_to 'Up', up_question_path(@question), method: :patch, remote: true
+    = link_to 'Down', down_question_path(@question), method: :patch, remote: true
 
-.well.question
-  h2= @question.title
-  - if can?(:update, @question)
-    = link_to 'Изменить вопрос', edit_question_path(@question), class: 'btn btn-sm btn-warning', role: 'button'
-    | &nbsp;
-    = link_to 'Удалить вопрос', question_path(@question), method: :delete, data: { confirm: 'Действительно удалить?' }, class: 'btn btn-sm btn-danger', role: 'button'
-  hr
-  p= @question.body
+  .well.question
+    h2= @question.title
+    - if can?(:update, @question)
+      = link_to 'Изменить вопрос', edit_question_path(@question), class: 'btn btn-sm btn-warning', role: 'button'
+      | &nbsp;
+      = link_to 'Удалить вопрос', question_path(@question), method: :delete, data: { confirm: 'Действительно удалить?' }, class: 'btn btn-sm btn-danger', role: 'button'
+    hr
+    p= @question.body
 
-  p.user_info
-    strong
-      ' Author:
-      i= @question.user.name
+    p.user_info
+      strong
+        ' Author:
+        i= @question.user.name
 
-  = render partial: 'tag_list', locals: { tag_list: @question }
+    = render 'tag_list', tag_list: @question
+    = render 'attachments'
 
-  = render 'attachments'
+    #question_comments.comments
+      = render 'comments/list', parent: @question
+    .new_question_comment
+      = render 'comments/form', parent: @question
 
-  .well.comments
-    = render 'comments/list', parent: @question
-
-.answers data={question_id: "#{@question.id}"}
-  = render 'answers'
-
-/ = subscribe_to "/questions/#{@question.id}/answers"
+#answers data={question_id: "#{@question.id}"}
+  = render partial: 'answers/list', locals: { question: @question }
+hr
+- if can?(:create, Answer)
+  = render partial: 'answers/form', locals: { question: @question, answer: @answer }
+- else
+  =render 'shared/try_sign_in'
+  / = subscribe_to "/questions/#{@question.id}/answers"

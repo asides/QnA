@@ -7,7 +7,7 @@ $ ->
     e.preventDefault();
     $(this).hide();
     answer_id = $(this).data('answerId')
-    $('form#edit-answer-' + answer_id).show()
+    $('#answer-' + answer_id + ' .edit_answer').show()
 
   # $('form.new_answer').bind 'ajax:success', (e, data, status, xhr) ->
   #   answer = $.parseJSON(xhr.responseText)
