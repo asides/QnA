@@ -16,13 +16,27 @@ feature 'Голосование за ответ', %q{
     visit question_path(question)
   end
 
+  scenario 'Гость не может голосовать', :skip_sign_in do
+    within "#answer-#{answer.id} .voting" do
+      expect(page).to_not have_content('UP')
+      expect(page).to_not have_content('Down')
+    end
+  end
+
   scenario 'Пользователь позитивно голосует за ответ', js: true do
-    within "#answer-#{answer.id} .total_voted" do
+    within "#answer-#{answer.id} .voting" do
       expect(page).to have_content( '0' )
       click_on 'Up'
       expect(page).to have_content( '1' )
       expect(page).to_not have_content('UP')
     end
   end
-
+  scenario 'Пользователь отрицательно голосует за ответ', js: true do
+    within "#answer-#{answer.id} .voting" do
+      expect(page).to have_content( '0' )
+      click_on 'Down'
+      expect(page).to have_content( '-1' )
+      expect(page).to_not have_content('Down')
+    end
+  end
 end

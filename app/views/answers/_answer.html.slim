@@ -1,11 +1,13 @@
 - if answer.persisted?
     .panel.panel-default.answer id="answer-#{answer.id}"
       .panel-heading
-        - if answer.best
-          span
-            i.glyphicon.glyphicon-ok-circle.best-answer
-        - if can?(:set_best, answer)
-          = link_to 'Best/Unbest answer', set_best_answer_path(answer), class: 'set-best-answer', data: { answer_id: answer.id }, remote: true, method: :post
+        .best-answer
+          - if answer.best
+            span.glyphicon.glyphicon-ok-circle.best-answer
+          - if can?(:set_best, answer)
+            = link_to 'Best/Unbest answer', set_best_answer_path(answer), class: 'set-best-answer', data: { answer_id: answer.id }, remote: true, method: :post
+        .voting
+          = render 'votes/voting', parent: answer
       .panel-body
         p= answer.body
         ul
@@ -23,6 +25,7 @@
             strong.text-info= answer.user.name
           - if can?(:update, answer)
             = link_to 'Редактировать', '#', class: 'btn btn-sm btn-primary edit-answer-link', data: { answer_id: answer.id }
+          - if can?(:destroy, answer)
             = link_to 'Удалить', answer_path(answer), class: 'btn btn-sm btn-danger', method: :delete, remote: true
 
           .edit_answer

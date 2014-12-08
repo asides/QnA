@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141205104150) do
+ActiveRecord::Schema.define(version: 20141207111652) do
 
   create_table "answers", force: true do |t|
     t.text     "body"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20141205104150) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.boolean  "best",        default: false
+    t.integer  "total_voted", default: 0
   end
 
   add_index "answers", ["question_id"], name: "index_answers_on_question_id"

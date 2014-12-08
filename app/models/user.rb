@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   has_many :authorizations
   has_many :questions, dependent: :destroy
   has_many :answers, dependent: :destroy
-  has_many :votes, dependent: :destroy
+  has_many :votes
 
   validates :name, length: { maximum: 20 }, presence: true
 
@@ -30,5 +30,13 @@ class User < ActiveRecord::Base
 
   def create_authorization(auth)
     self.authorizations.create(provider: auth.provider, uid: auth.uid)
+  end
+
+  def can_vote_up?(votable)
+    self.votes.where(votable: votable).first.score < 1
+  end
+
+  def can_vote_down?(votable)
+    self.votes.where(votable: votable).first.score > -1
   end
 end

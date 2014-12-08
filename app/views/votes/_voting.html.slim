@@ -1,0 +1,8 @@
+.total_voted
+  = parent.total_voted
+p
+  - if current_user.can_vote_up?(parent)
+    = link_to 'Up', polymorphic_path(parent, action: 'up'), method: :patch, remote: true
+  - if current_user.can_vote_down?(parent)
+    '  |
+    = link_to 'Down', polymorphic_path(parent, action: 'down'), method: :patch, remote: true

@@ -7,6 +7,8 @@ RSpec.describe Answer, type: :model do
   it { should belong_to(:question) }
   it { should have_many(:attachments).dependent(:destroy) }
   it { should have_many(:comments).dependent(:destroy) }
+  it { should have_many(:votes).dependent(:destroy) }
+
   it { should validate_presence_of :question }
 
   it { should belong_to(:user) }
