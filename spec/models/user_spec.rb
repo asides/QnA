@@ -12,30 +12,44 @@ RSpec.describe User, type: :model do
 
   describe 'Check voting for user' do
     let!(:user) { create(:user) }
-    let!(:question) { create(:question) }
-    let!(:vote) { create(:vote, votable: question, user: user) }
 
-    context '#can_vote_up?(votable)' do
-      it 'can vote up' do
-        expect( user.can_vote_up?( question ) ).to be true
+    context 'when votable present' do
+      let(:vote) { create(:vote, user: user) }
+      let(:question) { create(:question, votes: [vote], user: user) }
+
+      describe '#can_vote_up?(votable)' do
+        it 'can vote up' do
+          expect( user.can_vote_up?( question ) ).to be true
+        end
+
+        it 'do not can vote up' do
+          vote.update( score: 1 )
+          expect( user.can_vote_up?( question ) ).to be false
+        end
       end
 
-      it 'do not can vote up' do
-        vote.update( score: 1 )
-        expect( user.can_vote_up?( question ) ).to be false
+      describe '#can_vote_down?(votable)' do
+        it 'can vote down' do
+          expect( user.can_vote_down?( question ) ).to be true
+        end
+
+        it 'do not can vote down' do
+          vote.update( score: -1 )
+          expect( user.can_vote_down?( question ) ).to be false
+        end
       end
     end
 
-    context '#can_vote_down?(votable)' do
-      it 'can vote down' do
-        expect( user.can_vote_down?( question ) ).to be true
+    context 'when user has not votes' do
+      let(:question) { create(:question, user: user) }
+      it '#can_vote_up? return true' do
+        expect(user.can_vote_up?( question )).to be true
       end
-
-      it 'do not can vote down' do
-        vote.update( score: -1 )
-        expect( user.can_vote_down?( question ) ).to be false
+      it '#can_vote_down? return true' do
+        expect(user.can_vote_down?( question )).to be true
       end
     end
+
   end
 
   describe '.find_for_oauth' do

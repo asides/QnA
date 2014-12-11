@@ -1,2 +1,2 @@
 <% parent_id = "#{@vote.votable_type.downcase}-#{@vote.votable_id}" %>
-$('#<%= parent_id %> .voting').html( '<%= j render "votes/voting", parent: @vote.votable %>');
+$('#<%= parent_id %>  .<%= parent_id %>-voting').html( '<%= j render "votes/voting", parent: @vote.votable %>');

@@ -1,11 +1,12 @@
 div id="question-#{@question.id}"
-  .voting
+  div class="question-#{@question.id}-voting"
     = render 'votes/voting', parent: @question
 
   .well.question
     h2= @question.title
     - if can?(:update, @question)
       = link_to 'Изменить вопрос', edit_question_path(@question), class: 'btn btn-sm btn-warning', role: 'button'
+    - if can?(:destroy, @question)
       | &nbsp;
       = link_to 'Удалить вопрос', question_path(@question), method: :delete, data: { confirm: 'Действительно удалить?' }, class: 'btn btn-sm btn-danger', role: 'button'
     hr

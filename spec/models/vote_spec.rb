@@ -48,7 +48,7 @@ RSpec.describe Vote, :type => :model do
   end
 
   describe 'after_save' do
-    it "sends increment_parent_counter" do
+    it "sends update_parent_total_voted" do
       expect(vote).to receive(:update_parent_total_voted)
       vote.save!
     end

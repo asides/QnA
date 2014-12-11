@@ -33,10 +33,18 @@ class User < ActiveRecord::Base
   end
 
   def can_vote_up?(votable)
-    self.votes.where(votable: votable).first.score < 1
+    if self.votes.where(votable: votable).present?
+      self.votes.where(votable: votable).first.score < 1
+    else
+      return true
+    end
   end
 
   def can_vote_down?(votable)
-    self.votes.where(votable: votable).first.score > -1
+    if self.votes.where(votable: votable).present?
+      self.votes.where(votable: votable).first.score > -1
+    else
+      return true
+    end
   end
 end

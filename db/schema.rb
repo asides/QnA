@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141207111652) do
+ActiveRecord::Schema.define(version: 20141209142604) do
 
   create_table "answers", force: true do |t|
     t.text     "body"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 20141207111652) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.integer  "total_voted",      default: 0
   end
 
   add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type"

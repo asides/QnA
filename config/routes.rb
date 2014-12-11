@@ -2,15 +2,15 @@ Rails.application.routes.draw do
   use_doorkeeper
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
-  concern :commentable do
-    resources :comments
-  end
-
   concern :votable do
       member do
         patch 'up', controller: :votes
         patch 'down', controller: :votes
       end
+  end
+
+  concern :commentable do
+    resources :comments, concerns: :votable
   end
 
   resources :questions, concerns: [:commentable, :votable], shallow: true do

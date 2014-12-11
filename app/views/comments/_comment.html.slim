@@ -1,8 +1,15 @@
 .bg-success id="comment-#{comment.id}"
+  div class="comment-#{comment.id}-voting"
+    = render 'votes/voting', parent: comment
   = comment.body
-  - if can?(:update, comment)
-    p
+  br
+  strong
+        ' Author:
+        i= comment.user.name
+  p
+    - if can?(:update, comment)
       = link_to 'Редактировать', '#', class: 'edit-comment-link', data: { comment_id: comment.id }
+    - if can?(:destroy, comment)
       '  |
       = link_to 'Удалить', comment_path(comment), method: :delete, remote: true
 

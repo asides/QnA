@@ -28,11 +28,6 @@ RSpec.describe Ability, type: :model do
     # answers
     let(:answer) { create(:answer, question: question, user: other) }
     let(:answer2) { create(:answer, question: question, user: user) }
-    # # comments for question
-    # let(:comment) { create(:comment, commentable: question, user: other) }
-    # let(:comment2) { create(:comment, commentable: question, user: user) }
-
-    let!(:vote) { create(:vote, user: other, votable: question) }
 
 
     it { should_not be_able_to :manage, :all }
@@ -61,8 +56,11 @@ RSpec.describe Ability, type: :model do
     it { should_not be_able_to :set_best, answer2 }
 
     #Votes
-    it { should be_able_to :up, Vote}
-    it { should be_able_to :down, Vote}
+    it { should be_able_to :up, create(:vote, user: user, votable: create(:question, user: other)), user: user}
+    it { should_not be_able_to :up, create(:vote, user: user, votable: create(:question, user: user)), user: user}
+
+    it { should be_able_to :down, create(:vote, user: user, votable: create(:question, user: other)), user: user}
+    it { should_not be_able_to :down, create(:vote, user: user, votable: create(:question, user: user)), user: user}
 
     #Comment
     it { should be_able_to :update, create(:comment, user: user), user: user }
